@@ -2,15 +2,15 @@
 
 ### Projeto Certificação RocketSeat
 
-### 2019/12/09 a 2020/01/05
+#### 2019/12/09 a 2020/01/05
 
-### Nome Aplicação: Gympoint
+#### Nome Aplicação: Gympoint
 
-### Developer: Josuel A. Lopes
+#### Developer: Josuel A. Lopes
 
-### Padrão de código Airbnb
+#### Padrão de código Airbnb
 
-### Ambiente Desenvolvimento:
+#### Ambiente Desenvolvimento:
 
 ##### Sistema Operacional: Linux - Ubuntu 16.04LTS
 
@@ -18,13 +18,13 @@
 
 ##### Versão Desenvolvimento Mobile: Android
 
-#### Containers Docker
+##### Containers Docker
 
 ##### Banco dados - Postgres / Mongo / Redis
 
 #### Jobs, Gerenciamento e Fila envio EMAILs
 
-##### Queue
+#### Queue
 
 #### Tratativa de Erros/Exceções
 
@@ -36,13 +36,21 @@
 
 #### Configurar arquivo ".env.example" com variàveis ambiente, renomear para ".env"
 
-### Executar console
+#### Executar console
 
-### Diretorio aplicação backend, para excecutar backend: yarn dev
+#### Diretorio aplicação backend, para excecutar backend:
 
-### Diretorio aplicação backend, para excecutar Jobs email: yarn queue
+```js
+> yarn dev
+```
 
-### WEB
+#### Diretorio aplicação backend, para excecutar Jobs email:
+
+```js
+ yarn queue
+```
+
+## WEB
 
 #### FERRAMENTAS
 
@@ -54,8 +62,9 @@
 
 ### Esturtura projeto
 
-########################## INICIO ###########################
-#################### PRIMEIRA FASE - 01 #####################
+# INICIO
+
+## PRIMEIRA FASE - 01
 
 ## :rocket: Sobre o desafio
 
@@ -71,6 +80,7 @@ Você deverá criar a aplicação do zero utilizando o [Express](https://express
 
 - ESLint -Airbnb -ok
 
+```js
 * ? How would you like to use ESLint? To check syntax, find problems, and enforce code style
 * ? What type of modules does your project use? JavaScript modules (import/export)
 * ? Which framework does your project use? None of these
@@ -81,6 +91,7 @@ Você deverá criar a aplicação do zero utilizando o [Express](https://express
 * ? What format do you want your config file to be in? JavaScript
 * Checking peerDependencies of eslint-config-airbnb-base@latest
 * The config that you've selected requires the following dependencies:
+```
 
 - Prettier - OK
 - EditorConfig - OK;
@@ -96,7 +107,7 @@ Permita que um usuário se autentique em sua aplicação utilizando e-mail e uma
 
 Crie um usuário administrador utilizando a funcionalidade de [seeds do sequelize](https://sequelize.org/master/manual/migrations.html#creating-first-seed), essa funcionalidade serve para criarmos registros na base de dados de forma automatizada.
 
-## Agora execute:
+### Agora execute:
 
 ```js
 OBS: Com banco dados novo sem tables
@@ -107,7 +118,7 @@ yarn sequelize db:seed:all
 Agora você tem um usuário na sua base de dados, utilize esse usuário para todos logins daqui pra frente.
 
 - A autenticação deve ser feita utilizando JWT. -> jsonwebtoken -OK
-  -The MD5 hash for Gympointrockeseat is : 9fa6895cc740ea22235fda2ebecf54b4
+- The MD5 hash for Gympointrockeseat
 - Realize a validação dos dados de entrada; - schemas validadtion com YUP - OK
 
 #### 2. Cadastro de alunos
@@ -120,7 +131,7 @@ O cadastro de alunos só pode ser feito por administradores autenticados na apli
 
 O aluno não pode se autenticar no sistema, ou seja, não possui senha.
 
-##################### SEGUNDA FASE - 02 #####################
+## SEGUNDA FASE - 02
 
 ## :rocket: Sobre o desafio
 
@@ -134,7 +145,7 @@ Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplic
 
 Permita que o usuário possa cadastrar planos para matrícula de alunos, o plano deve possuir os seguintes campos:
 
--table = plans
+- table = plans
 
 - title (nome do plano);
 - duration (duração em número de meses);
@@ -261,7 +272,7 @@ Quando um pedido de auxílio for respondido, o aluno deve receber um e-mail da p
 - TRATAMENTO DE ERROS - MONITORAMENTO APLICAÇÃO
 - Sentry
 
-##################### TERCEIRA FASE - 03 #####################
+## TERCEIRA FASE - 03
 
 ## 🚀 Sobre o desafio
 
@@ -290,19 +301,22 @@ Antes de iniciar a parte web, **adicione as seguintes funcionalidades no back-en
 1. Adicione paginação no front-end e back-end para todas listagens;
 2. Utilize máscaras para inputs numéricos de valores, peso e altura;
 
-##################### QUARTA FASE - 04 #####################
+## QUARTA FASE - 04
 
-# Mobile
+## Mobile
 
-## Desenvolvimento somente em Android / Sistema Operacional Linux-Ubuntu 16.04LTS
+### Desenvolvimento somente em Android / Sistema Operacional Linux-Ubuntu 16.04LTS
 
-## Ajuste SDK - Android
+### Ajuste SDK - Android
 
-### Alterar o caminho do SDK no arquivo em ~/android/local.properties
+### Dentro do diretorio do projeto
 
-## Configurando ESLint
+#### Alterar o caminho do SDK no arquivo em ~/android/local.properties
 
-- yarn eslint --init
+### Configurando ESLint
+
+```js
+> yarn eslint --init
 
 * yarn run v1.21.1
 * \$ /home/josuel/Projects_2019/CursosRocketSeat/CursoBootCamp/desafio-final-certificacao/projeto_certificacao_Gympoint_09/Gympoint/mobile/gympoint/node_modules/.bin/eslint --init
@@ -316,6 +330,7 @@ Antes de iniciar a parte web, **adicione as seguintes funcionalidades no back-en
 * ? What format do you want your config file to be in? JavaScript
 * Checking peerDependencies of eslint-config-airbnb@latest
 * The config that you've selected requires the following dependencies:
+```
 
 ## Configurando Reactotron
 
