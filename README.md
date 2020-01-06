@@ -68,27 +68,19 @@ Nesse primeiro desafio vamos criar algumas funcionalidades básicas que aprendem
 Você deverá criar a aplicação do zero utilizando o [Express](https://expressjs.com/), além de precisar configurar as seguintes ferramentas:
 
 - Sucrase + Nodemon; - OK
+
 - ESLint -Airbnb -ok
 
-# ? How would you like to use ESLint? To check syntax, find problems, and enforce code style
-
-# ? What type of modules does your project use? JavaScript modules (import/export)
-
-# ? Which framework does your project use? None of these
-
-# ? Does your project use TypeScript? No
-
-# ? Where does your code run? Node
-
-# ? How would you like to define a style for your project? Use a popular style guide
-
-# ? Which style guide do you want to follow? Airbnb: https://github.com/airbnb/javascript
-
-# ? What format do you want your config file to be in? JavaScript
-
-# Checking peerDependencies of eslint-config-airbnb-base@latest
-
-# The config that you've selected requires the following dependencies:
+* ? How would you like to use ESLint? To check syntax, find problems, and enforce code style
+* ? What type of modules does your project use? JavaScript modules (import/export)
+* ? Which framework does your project use? None of these
+* ? Does your project use TypeScript? No
+* ? Where does your code run? Node
+* ? How would you like to define a style for your project? Use a popular style guide
+* ? Which style guide do you want to follow? Airbnb: https://github.com/airbnb/javascript
+* ? What format do you want your config file to be in? JavaScript
+* Checking peerDependencies of eslint-config-airbnb-base@latest
+* The config that you've selected requires the following dependencies:
 
 - Prettier - OK
 - EditorConfig - OK;
@@ -310,19 +302,20 @@ Antes de iniciar a parte web, **adicione as seguintes funcionalidades no back-en
 
 ## Configurando ESLint
 
-> yarn eslint --init
-> yarn run v1.21.1
-> \$ /home/josuel/Projects_2019/CursosRocketSeat/CursoBootCamp/desafio-final-certificacao/projeto_certificacao_Gympoint_09/Gympoint/mobile/gympoint/node_modules/.bin/eslint --init
-> ? How would you like to use ESLint? To check syntax, find problems, and enforce code style
-> ? What type of modules does your project use? JavaScript modules (import/export)
-> ? Which framework does your project use? React
-> ? Does your project use TypeScript? No
-> ? Where does your code run?
-> ? How would you like to define a style for your project? Use a popular style guide
-> ? Which style guide do you want to follow? Airbnb: https://github.com/airbnb/javascript
-> ? What format do you want your config file to be in? JavaScript
-> Checking peerDependencies of eslint-config-airbnb@latest
-> The config that you've selected requires the following dependencies:
+- yarn eslint --init
+
+* yarn run v1.21.1
+* \$ /home/josuel/Projects_2019/CursosRocketSeat/CursoBootCamp/desafio-final-certificacao/projeto_certificacao_Gympoint_09/Gympoint/mobile/gympoint/node_modules/.bin/eslint --init
+* ? How would you like to use ESLint? To check syntax, find problems, and enforce code style
+* ? What type of modules does your project use? JavaScript modules (import/export)
+* ? Which framework does your project use? React
+* ? Does your project use TypeScript? No
+* ? Where does your code run?
+* ? How would you like to define a style for your project? Use a popular style guide
+* ? Which style guide do you want to follow? Airbnb: https://github.com/airbnb/javascript
+* ? What format do you want your config file to be in? JavaScript
+* Checking peerDependencies of eslint-config-airbnb@latest
+* The config that you've selected requires the following dependencies:
 
 ## Configurando Reactotron
 
