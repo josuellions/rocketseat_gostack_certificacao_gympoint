@@ -1,31 +1,58 @@
 import React, { useMemo } from 'react';
 import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
-import { Container, Left, Info, TTitle, TText, Time } from './styles';
 
-export default function Helporders({ data, onSubscription }) {
+import {
+  Container,
+  LinkAnchor,
+  Left,
+  Info,
+  THead,
+  TTitle,
+  TText,
+  Time,
+} from './styles';
+
+export default function Helporders({ data, navigation }) {
+  const { id, created_at, answer_at, question } = data;
+
   const dateParsed = useMemo(() => {
-    return formatRelative(parseISO(data.created_at), new Date(), {
+    return formatRelative(parseISO(created_at), new Date(), {
       locale: pt,
       addSuffix: true,
     });
-  }, [data.created_at]);
+  }, [created_at]);
+
+  function handleSubmit(_id) {
+    // navigation.navigate('Answers', { _id });
+    console.tron.log(navigation);
+  }
 
   return (
     <Container>
       <Left>
         <Info>
-          {data.answer_at != null ? (
-            <TTitle>respondido</TTitle>
+          {answer_at != null ? (
+            <THead>
+              <LinkAnchor
+                key={id}
+                onPress={() => handleSubmit(id)}
+                icon="check-circle"
+                color="#41cb58"
+              >
+                Respondido
+              </LinkAnchor>
+              <Time>{dateParsed}</Time>
+            </THead>
           ) : (
-            <TTitle>sem resposta</TTitle>
+            <THead>
+              <LinkAnchor icon="check-circle" color="#eee">
+                <TTitle>sem resposta</TTitle>
+              </LinkAnchor>
+              <Time>{dateParsed}</Time>
+            </THead>
           )}
-          <TTitle>Pergunta</TTitle>
-          <TText>{data.question}</TText>
-          <Time>{dateParsed}</Time>
-
-          <TTitle>Resposta</TTitle>
-          <TText>{data.answer}</TText>
+          <TText>{question}</TText>
         </Info>
       </Left>
     </Container>

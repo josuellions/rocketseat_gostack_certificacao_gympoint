@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
+  flex: 1;
   margin-bottom: 14px;
   padding: 0px;
   border-radius: 4px;
@@ -16,22 +17,26 @@ export const Container = styled.View`
 
 export const Left = styled.View`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 `;
 export const Info = styled.View`
-  margin-top: 10px;
-  margin-left: 15px;
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
 `;
 
 export const TTitle = styled.Text`
   font-weight: bold;
-  font-size: 18px;
+  font-size: 14px;
   color: #333;
 `;
 
 export const Time = styled.Text`
-  font-size: 13px;
+  font-size: 11px;
   margin-top: 4px;
   color: #999;
 `;

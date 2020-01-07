@@ -9,23 +9,30 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   behavior: 'padding',
 })`
   flex: 1;
-  background: #fff;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 0px;
   width: 320px;
   max-height: 480px;
-  margin-top: 65px;
+  margin-top: 20px;
   margin-left: 20px;
   border-radius: 4px;
 `;
 
 export const Form = styled.View`
   align-self: stretch;
-  margin-top: 50px;
+  margin-top: 0px;
+  height: 320px;
+  min-height: 320px;
 `;
 
 export const FormInput = styled(TInput)`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-self: flex-start;
+  height: 320px;
+  min-height: 320px;
   margin-bottom: 10px;
 `;
 

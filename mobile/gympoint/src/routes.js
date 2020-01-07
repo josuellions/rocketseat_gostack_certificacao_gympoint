@@ -7,6 +7,10 @@ import Checkins from '~/pages/Checkins';
 
 import HelpOrders from '~/pages/HelpOrders';
 
+import HelpNew from '~/pages/HelpNew';
+
+import Answers from '~/pages/Answers';
+
 export default (isSigned = false) =>
   createAppContainer(
     createSwitchNavigator(
@@ -31,6 +35,10 @@ export default (isSigned = false) =>
             },
           }
         ),
+        Nav: createSwitchNavigator({
+          HelpNew,
+          Answers,
+        }),
       },
       {
         initialRouteName: isSigned ? 'App' : 'Sign',

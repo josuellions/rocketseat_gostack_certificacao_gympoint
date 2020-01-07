@@ -1,68 +1,57 @@
 import styled from 'styled-components/native';
-import Button from '~/components/Button';
+import Link from '~/components/Link';
 
-export const Container = styled.SafeAreaView`
+export const Container = styled.View`
   flex: 1;
-  z-index: 0;
-`;
-export const HeaderCustom = styled.View`
-  flex: 1;
-  align-self: center;
+  justify-content: flex-start;
   align-items: center;
-  background-color: #18161f;
-  height: 64px;
-  max-height: 64px;
-  margin-top: 0;
-  padding: 4px;
+  padding: 0 0px;
+  width: 320px;
+  max-height: 480px;
+  margin-top: 20px;
+  margin-left: 20px;
+  border-radius: 4px;
+
+  border: 1px solid #eee;
 `;
 
-export const SelectDate = styled.View`
-  margin-top: 15px;
-  padding-left: 100px;
-  padding-right: 100px;
+export const LinkAnchor = styled(Link)`
+  margin: 0px 0 0px 0;
+`;
+
+export const Left = styled.View`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+`;
+export const Info = styled.View`
+  margin-top: 10px;
+  margin-left: 15px;
+`;
 
-  font-size: 24px;
+export const THead = styled.View`
+  display: flex;
+  padding: 10px 0 10px 0;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+`;
+
+export const TTitle = styled.Text`
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+`;
+export const TText = styled.Text`
+  font-size: 12px;
+  color: #999;
+  margin: 0 0 25px 0;
 `;
 
 export const Time = styled.Text`
-  font-size: 20px;
-  color: #fff;
-  font-weight: bold;
-  align-self: center;
-  padding-left: 5px;
-  padding-right: 5px;
-`;
-
-export const SelectPage = styled.View`
-  margin-top: 15px;
-  padding-left: 150px;
-  padding-right: 150px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  font-size: 24px;
-`;
-
-export const TPage = styled.Text`
-  font-size: 20px;
-  color: #fff;
-  font-weight: bold;
-  align-self: center;
-  padding-left: 5px;
-  padding-right: 5px;
-`;
-
-export const List = styled.FlatList.attrs({
-  showsVerticalScrollIndicator: false,
-  contentContainerStyle: { padding: 30 },
-})``;
-
-export const SubmitButton = styled(Button)`
-  margin: 25px 25px 0 25px;
+  margin: 0 15px 0 0;
+  font-size: 11px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  color: #999;
 `;

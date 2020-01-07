@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Checkin from '~/components/Checkin';
 
+import HeaderCustom from '~/components/Header';
 import { Container, List, SubmitButton } from './styles';
 
 import api from '~/services/api';
@@ -29,16 +30,19 @@ export default function Checkins() {
   }
 
   return (
-    <Container>
-      <SubmitButton loading={loading} onPress={handleSubmit}>
-        Novo checkin-in
-      </SubmitButton>
-      <List
-        data={checkins}
-        keyExtractor={item => String(item)}
-        renderItem={({ item }) => <Checkin data={item} />}
-      />
-    </Container>
+    <>
+      <HeaderCustom />
+      <Container>
+        <SubmitButton loading={loading} onPress={handleSubmit}>
+          Novo checkin-in
+        </SubmitButton>
+        <List
+          data={checkins}
+          keyExtractor={item => String(item)}
+          renderItem={({ item }) => <Checkin data={item} />}
+        />
+      </Container>
+    </>
   );
 }
 
