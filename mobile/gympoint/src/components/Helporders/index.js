@@ -13,7 +13,7 @@ import {
   Time,
 } from './styles';
 
-export default function Helporders({ data, navigation }) {
+export default function Helporders({ data, onAnswers }) {
   const { id, created_at, answer_at, question } = data;
 
   const dateParsed = useMemo(() => {
@@ -23,11 +23,6 @@ export default function Helporders({ data, navigation }) {
     });
   }, [created_at]);
 
-  function handleSubmit(_id) {
-    // navigation.navigate('Answers', { _id });
-    console.tron.log(navigation);
-  }
-
   return (
     <Container>
       <Left>
@@ -36,7 +31,7 @@ export default function Helporders({ data, navigation }) {
             <THead>
               <LinkAnchor
                 key={id}
-                onPress={() => handleSubmit(id)}
+                onPress={onAnswers}
                 icon="check-circle"
                 color="#41cb58"
               >

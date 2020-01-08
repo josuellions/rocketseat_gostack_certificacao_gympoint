@@ -9,24 +9,28 @@ import { Container, List, SubmitButton } from './styles';
 
 import api from '~/services/api';
 
-import { checkinsUpSuccess } from '~/store/modules/checkins/actions';
+import { checkinsUpRequest } from '~/store/modules/checkins/actions';
 
 export default function Checkins() {
   const dispath = useDispatch();
   const [checkins, setCheckins] = useState();
-  const { id, loading } = useSelector(state => state.auth);
+  const [checkinsID, setcheckinID] = useState();
+  const studentId = useSelector(state => state.auth.id);
+  const loading = useSelector(state => state.auth.loading);
 
   useEffect(() => {
-    async function loadCheckins(studentId) {
+    async function loadCheckins() {
       const response = await api.get(`students/${studentId}/checkins`);
 
-      setCheckins(response.data);
+      setCheckins(response.data.map(checkin => checkin));
+      setcheckinID(false);
     }
-    loadCheckins(id);
-  }, [id]);
+    loadCheckins(studentId);
+  }, [checkinsID, studentId]);
 
   function handleSubmit() {
-    dispath(checkinsUpSuccess(id));
+    dispath(checkinsUpRequest(studentId));
+    setcheckinID(true);
   }
 
   return (

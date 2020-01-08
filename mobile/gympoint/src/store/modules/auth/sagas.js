@@ -14,17 +14,13 @@ export function* signIn({ payload }) {
     yield delay(3000); // Somente para teste de loading button
 
     yield put(signInSuccess(id));
-
-    // history.push('/dashboard');
   } catch (err) {
     Alert.alert('Falha na autenticação, verifique seus dados!');
     yield put(signInFailure());
   }
 }
 
-export function signOut() {
-  // history.push('/');
-}
+export function signOut() {}
 
 export default all([
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),

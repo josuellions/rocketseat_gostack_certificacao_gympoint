@@ -14,6 +14,6 @@ export function checkinsUpSuccess(id) {
 
 export function checkinsInFailure() {
   return {
-    type: '@auth/SIGN_FAILURE',
+    type: '@auth/CHECKINS_FAILURE',
   };
 }

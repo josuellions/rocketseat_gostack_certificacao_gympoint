@@ -1,6 +1,6 @@
-import React from 'react';
-// import { parseISO, formatRelative } from 'date-fns';
-// import pt from 'date-fns/locale/pt-BR';
+import React, { useMemo } from 'react';
+import { parseISO, formatRelative } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
 
 import HeaderCustom from '~/components/Header';
 import {
@@ -14,22 +14,16 @@ import {
   Time,
 } from './styles';
 
-export default function Answers() {
-  const question =
-    'Teste Teste Teste Teste Teste Teste Teste Teste Teste Teste Teste Teste Teste Teste Teste Teste Teste ';
-  const dateParsed = 'Hoje às 3h ';
+export default function Answers({ navigation }) {
+  const { created_at, question, answer } = navigation.state.params.data;
 
-  const answer =
-    'resposta teste resposta teste  resposta teste resposta teste resposta teste resposta teste resposta teste resposta teste ';
-
-  /*
   const dateParsed = useMemo(() => {
-    return formatRelative(parseISO(data.created_at), new Date(), {
+    return formatRelative(parseISO(created_at), new Date(), {
       locale: pt,
       addSuffix: true,
     });
-  }, [data.created_at]);
-*/
+  }, [created_at]);
+
   // function handleSubmit() {
   // dispath(signInRequest(id));
   // }

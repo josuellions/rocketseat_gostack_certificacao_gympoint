@@ -26,7 +26,7 @@ export const Left = styled.View`
 `;
 export const Info = styled.View`
   margin-top: 10px;
-  margin-left: 15px;
+  padding: 15px;
 `;
 
 export const THead = styled.View`
@@ -44,8 +44,8 @@ export const TTitle = styled.Text`
 `;
 export const TText = styled.Text`
   font-size: 12px;
-  color: #999;
   margin: 0 0 25px 0;
+  color: #999;
 `;
 
 export const Time = styled.Text`

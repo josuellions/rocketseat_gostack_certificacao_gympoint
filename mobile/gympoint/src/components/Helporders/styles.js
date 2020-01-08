@@ -11,8 +11,6 @@ export const Container = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
-  opacity: ${props => (props.past ? 0.6 : 1)};
 `;
 
 export const LinkAnchor = styled(Link)`
@@ -25,12 +23,13 @@ export const Left = styled.View`
   align-items: center;
 `;
 export const Info = styled.View`
-  margin-top: 10px;
-  margin-left: 15px;
+  margin: 15px;
 `;
 
 export const THead = styled.View`
   display: flex;
+  width: 280px;
+  min-width: 280px;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
@@ -43,6 +42,7 @@ export const TTitle = styled.Text`
 `;
 export const TText = styled.Text`
   font-size: 12px;
+  margin: 0 0 25px 0;
   color: #333;
 `;
 

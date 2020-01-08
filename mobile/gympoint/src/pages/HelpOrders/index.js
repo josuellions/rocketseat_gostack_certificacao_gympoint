@@ -11,25 +11,24 @@ import { Container, List, SubmitButton } from './styles';
 
 import api from '~/services/api';
 
-// import { helpordersUpSuccess } from '~/store/modules/helporders/actions';
-
 export default function HelpOrders({ navigation }) {
-  // const dispath = useDispatch();
   const [helporder, setHelporder] = useState();
   const { id, loading } = useSelector(state => state.auth);
 
   useEffect(() => {
     async function loadCheckins(studentId) {
       const response = await api.get(`students/${studentId}/help-orders`);
-      console.tron.log(response);
       setHelporder(response.data);
     }
     loadCheckins(id);
   }, [id]);
 
   function handleSubmit() {
-    // dispath(helpordersUpSuccess());
     navigation.navigate('HelpNew', {});
+  }
+
+  function handleAnswer(data) {
+    navigation.navigate('Answers', { data });
   }
 
   return (
@@ -42,7 +41,9 @@ export default function HelpOrders({ navigation }) {
         <List
           data={helporder}
           keyExtractor={item => String(item)}
-          renderItem={({ item }) => <Helporder data={item} />}
+          renderItem={({ item }) => (
+            <Helporder onAnswers={() => handleAnswer(item)} data={item} />
+          )}
         />
       </Container>
     </>

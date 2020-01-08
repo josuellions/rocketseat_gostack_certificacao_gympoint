@@ -1,7 +1,7 @@
-import { Platform } from 'react-native';
+import { Platform, TextInput } from 'react-native';
+
 import styled from 'styled-components/native';
 
-import TInput from '~/components/Input';
 import Button from '~/components/Button';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
@@ -19,21 +19,24 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   border-radius: 4px;
 `;
 
-export const Form = styled.View`
+export const Form = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: { padding: 5 },
+})`
   align-self: stretch;
-  margin-top: 0px;
-  height: 320px;
-  min-height: 320px;
 `;
 
-export const FormInput = styled(TInput)`
-  display: flex;
+export const FormInput = styled(TextInput)`
+  flex: 1;
+  width: 100%;
   flex-direction: row;
-  justify-content: flex-start;
+  padding: 10px;
+  align-items: flex-start;
   align-self: flex-start;
   height: 320px;
   min-height: 320px;
   margin-bottom: 10px;
+  border: 1px solid #eee;
 `;
 
 export const SubmitButton = styled(Button)`

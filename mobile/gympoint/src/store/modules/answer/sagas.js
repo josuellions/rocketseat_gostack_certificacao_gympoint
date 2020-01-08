@@ -1,7 +1,6 @@
 import { Alert } from 'react-native';
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
-// import history from '~/services/history';
 import api from '~/services/api';
 
 import { answerUpSuccess, answerInFailure } from './actions';
@@ -15,8 +14,6 @@ export function* answers({ payload }) {
     });
 
     yield put(answerUpSuccess(response.data));
-
-    // history.push('/helporder/list');
   } catch (err) {
     console.tron.log(err);
     Alert.error('Falha no cadastro, verifique seus dados!');
