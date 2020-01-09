@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { MdDone, MdChevronLeft, MdKeyboardArrowDown } from 'react-icons/md';
+import { MdDone, MdChevronLeft } from 'react-icons/md';
 
 import * as Yup from 'yup';
 
@@ -22,47 +22,34 @@ import {
   FieldsetInput,
   ContainerSelect,
   ContainerSelectPlan,
-  Badge,
-  SelectList,
-  Scroll,
-  SelectOption,
-  BadgePlan,
-  SelectListPlan,
-  ScrollPlan,
-  SelectOptionPlan,
 } from './styles';
 
 /* Schemas Validation dados entrada */
+/*
 const schema = Yup.object().shape({
   student_id: Yup.string().required('Selecione um aluno'),
   plan_id: Yup.string().required('Selecione um plano'),
   end_date: Yup.date().required('Data de início é obrigatório'),
 });
+*/
 
 export default function RegistrationRegister() {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.student.loading);
   const [date] = useState(new Date());
-  const [visible, setVisible] = useState(false);
-  const [visiblePlan, setVisiblePlan] = useState(false);
 
-  const [selectStudent, setSelectStudent] = useState();
-  const [selectPlan, setSelectPlan] = useState();
   const [totalPrice, settotalPrice] = useState();
 
-  function handleToggleVisible() {
-    setVisible(!visible);
-  }
+  const [students, setStudent] = useState([]);
+  const [studentID, setStudentID] = useState();
 
-  function handleToggleVisiblePlan() {
-    setVisiblePlan(!visiblePlan);
-  }
+  const [plans, setPlans] = useState([]);
+  const [planID, setPlanID] = useState();
+
+  const [registrations, setRegistrations] = useState([]);
 
   async function handleSubmit({ start_date }) {
-    await dispatch(
-      registrationUpRequest(selectStudent, selectPlan, start_date)
-    );
-    // console.tron.log(selectStudent, selectPlan, start_date);
+    await dispatch(registrationUpRequest(studentID, planID, start_date));
   }
 
   // const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -72,7 +59,18 @@ export default function RegistrationRegister() {
     [date]
   );
 
-  const [students, setStudent] = useState([]);
+  useEffect(() => {
+    async function loadRegistrations() {
+      const response = await api.get('registrations');
+
+      const rep = response.data.map(data => {
+        return data;
+      });
+
+      setRegistrations(rep);
+    }
+    loadRegistrations();
+  }, []);
 
   useEffect(() => {
     async function loadStudents() {
@@ -81,12 +79,12 @@ export default function RegistrationRegister() {
       const rep = response.data.map(data => {
         return data;
       });
+
       setStudent(rep);
     }
     loadStudents();
   }, []);
 
-  const [plans, setPlans] = useState([]);
   useEffect(() => {
     async function loadPlans() {
       const response = await api.get('plans');
@@ -98,28 +96,31 @@ export default function RegistrationRegister() {
     loadPlans();
   }, []);
 
-  async function mapStateToProps(price, duration) {
-    await settotalPrice(formatPrice(price * duration));
-  }
-
-  async function selectStudentList(id) {
-    setSelectStudent(id);
-    setVisible(false);
-  }
-
-  async function selectPlanList(id, price, duration) {
-    mapStateToProps(price, duration);
-    setVisiblePlan(false);
-    setSelectPlan(id);
+  function mapStateToProps(price, duration) {
+    settotalPrice(formatPrice(price * duration));
   }
 
   async function selectDate() {
     // await console.tron.log(start_date);
   }
 
+  function handleChangeStudent(event) {
+    setStudentID(event.target.value);
+  }
+
+  async function handleChangePlan(event) {
+    setPlanID(event.target.value);
+
+    await plans.map(plan =>
+      plan.id == event.target.value
+        ? mapStateToProps(plan.price, plan.duration)
+        : ''
+    );
+  }
+
   return (
     <Container>
-      <Form onSubmit={handleSubmit} schema={schema}>
+      <Form onSubmit={handleSubmit}>
         <header>
           <h1>Cadastro de matrícula</h1>
           <Link to="/registration/list">
@@ -131,65 +132,42 @@ export default function RegistrationRegister() {
           </button>
         </header>
         <FieldsetForm>
-          <strong htmlFor="student_id">ALUNO</strong>
-          {/* <select name="student_id">
-            {students.map(student => (
-              <option id={student.id}>{student.name}</option>
-            ))}
-          </select> */}
-
+          <strong>ALUNO</strong>
           <ContainerSelect>
-            <Badge onClick={handleToggleVisible}>
-              <MdKeyboardArrowDown color="#eee" size={20} />
-            </Badge>
-
-            <SelectList visible={visible}>
-              <Scroll>
-                {students.map(student => (
-                  <SelectOption
-                    key={student.id}
-                    onClick={() => selectStudentList(student.id)}
-                  >
-                    <p>{student.name}</p>
-                  </SelectOption>
-                ))}
-              </Scroll>
-            </SelectList>
+            <select
+              name="student_id"
+              value={studentID}
+              onChange={handleChangeStudent}
+            >
+              <option> Select... </option>
+              {students.map(student =>
+                student.id > 0 ? (
+                  <option id={student.id} value={student.id}>
+                    {student.name}
+                  </option>
+                ) : (
+                  ''
+                )
+              )}
+            </select>
           </ContainerSelect>
 
-          <strong htmlFor="plan_id">PLANO</strong>
+          <strong>PLANO</strong>
           <ContainerSelectPlan>
-            <BadgePlan onClick={handleToggleVisiblePlan}>
-              <MdKeyboardArrowDown color="#eee" size={20} />
-            </BadgePlan>
-
-            <SelectListPlan visiblePlan={visiblePlan}>
-              <ScrollPlan>
-                {plans.map(plan => (
-                  <SelectOptionPlan
-                    key={plan.id}
-                    onClick={() =>
-                      selectPlanList(plan.id, plan.price, plan.duration)
-                    }
-                  >
-                    <p>{plan.title}</p>
-                  </SelectOptionPlan>
-                ))}
-              </ScrollPlan>
-            </SelectListPlan>
+            <select
+              name="plan_id"
+              value={studentID}
+              onChange={handleChangePlan}
+            >
+              <option> Select... </option>
+              {plans.map(plan => (
+                <option id={plan.id} value={plan.id}>
+                  {plan.title}
+                </option>
+              ))}
+            </select>
           </ContainerSelectPlan>
           <FieldsetInputs>
-            {/*
-            <FieldsetInput>
-
-              <strong htmlFor="plan_id">PLANO</strong>
-             <select name="plan_id">
-                {plans.map(plan => (
-                  <option id={plan.id}>{plan.title}</option>
-                ))}
-              </select>
-            </FieldsetInput>
-            */}
             <FieldsetInput>
               <strong htmlFor="start_date">DATA INÍCIO</strong>
               <Input

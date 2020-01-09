@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { lighten, darken } from 'polished';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   max-width: 980px;
@@ -127,65 +126,11 @@ export const ContainerSelect = styled.div`
   align-items: stretch;
   flex-direction: collum;
   align-content: space-between;
-`;
 
-export const Badge = styled.button`
-  position: relative;
-  background: none;
-  border: 0;
-  background: ${lighten(0.3, '#fff')};
-  width: 100%;
-  padding-left: 905px;
-  border: 2px solid #eee;
-  border-radius: 4px;
-`;
+    select {
+      width: 100%;
+    }
 
-export const SelectList = styled.div`
-  position: absolute;
-  width: 100%;
-  //left: calc(50% - 130px);
-  top: calc(100% + 2px);
-  background: #eee;
-  opacity: 0.9;
-  border-radius: 4px;
-  padding: 15px 5px;
-  color: #fff;
-  display: ${props => (props.visible ? 'block' : 'none')};
-  z-index: 1000;
-  float: left;
-
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   // left: calc(50% - 20px);
-  //   // top: -20px;
-  //   width: 0;
-  //   height: 0;
-  //   border-left: 20px solid transparent;
-  //   border-right: 20px solid transparent;
-  //   border-bottom: 20px solid #18161f;
-  // }
-`;
-
-export const Scroll = styled(PerfectScrollbar)`
-  max-height: 260px;
-  padding: 5px 15px;
-`;
-
-export const SelectOption = styled.div`
-  margin: -203px 0 0 0;
-  color: black;
-
-  & + div {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.9);
-  }
-
-  p {
-    font-size: 13px;
-    line-height: 18px;
-    cursor: pointer;
   }
 `;
 
@@ -198,62 +143,8 @@ export const ContainerSelectPlan = styled.div`
   align-items: stretch;
   flex-direction: collum;
   align-content: space-between;
-`;
-export const BadgePlan = styled.button`
-  position: relative;
-  background: none;
-  border: 0;
-  background: ${lighten(0.3, '#fff')};
-  padding-left: 905px;
-  border: 2px solid #eee;
-  border-radius: 4px;
-`;
 
-export const SelectListPlan = styled.div`
-  position: absolute;
-  width: 100%;
-  //left: calc(50% - 130px);
-  top: calc(100% + 2px);
-  background: #eee;
-  opacity: 0.9;
-  border-radius: 4px;
-  padding: 15px 5px;
-  color: #fff;
-  display: ${props => (props.visiblePlan ? 'block' : 'none')};
-  z-index: 1000;
-  float: left;
-
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   // left: calc(50% - 20px);
-  //   // top: -20px;
-  //   width: 0;
-  //   height: 0;
-  //   border-left: 20px solid transparent;
-  //   border-right: 20px solid transparent;
-  //   border-bottom: 20px solid #18161f;
-  // }
-`;
-
-export const ScrollPlan = styled(PerfectScrollbar)`
-  max-height: 260px;
-  padding: 5px 15px;
-`;
-
-export const SelectOptionPlan = styled.div`
-  margin: -38px 0 0 0;
-  color: black;
-
-  & + div {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.9);
-  }
-
-  p {
-    font-size: 13px;
-    line-height: 18px;
-    cursor: pointer;
+  select {
+    width: 100%;
   }
 `;

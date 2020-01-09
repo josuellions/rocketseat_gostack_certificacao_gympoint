@@ -24,7 +24,7 @@ class RegistrationsController {
         {
           model: Students,
           as: 'students',
-          attributes: ['name', 'email', 'idade', 'peso', 'altura'],
+          attributes: ['id', 'name', 'email', 'idade', 'peso', 'altura'],
         },
         {
           model: Plans,
@@ -68,7 +68,6 @@ class RegistrationsController {
         student_id,
       },
     });
-
     if (checkResitration) {
       return res.status(400).json({ error: 'Resitration exist.' });
     }
@@ -105,7 +104,7 @@ class RegistrationsController {
         {
           model: Students,
           as: 'students',
-          attributes: ['name', 'email', 'idade', 'peso', 'altura'],
+          attributes: ['id', 'name', 'email', 'idade', 'peso', 'altura'],
         },
         {
           model: Plans,
