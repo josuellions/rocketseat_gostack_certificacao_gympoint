@@ -23,36 +23,26 @@ import {
 
 export default function Student() {
   const [schedule, setSchedule] = useState([]);
-  // const [date, setDate] = useState(new Date());
+  const [postPage, setPostPage] = useState(1);
 
-  // const selectDateFormatted = useMemo();
-  // () => format(date, "d 'de' MMMM", { locale: pt }),
-  // [date]
+  function nextSetPage() {
+    setPostPage(postPage + 1);
+  }
 
-  // function dateFormatted(dt) {
-  // const dateFormat = format(parseISO(dt), "d 'de' MMMM, ', às 'HH:mm", {
-  //   locale: pt,
-  // });
-  // return dateFormat;
-  // }
-
-  // function handlePrevDay() {
-  // setDate(subDays(date, 1));
-  // }
-
-  // function handleNextDay() {
-  // setDate(addDays(date, 1));
-  // }
+  function previousSetPage() {
+    // eslint-disable-next-line no-unused-expressions
+    postPage >= 2 ? setPostPage(postPage - 1) : postPage;
+  }
 
   useEffect(() => {
     async function loadSchedule() {
       const response = await api.get('students', {
-        params: { page: 2 },
+        params: { page: postPage },
       });
       setSchedule(response.data);
     }
     loadSchedule();
-  }, []);
+  }, [postPage]);
 
   return (
     <Container>
@@ -90,11 +80,11 @@ export default function Student() {
       </ListStudents>
       <Footer noEvent>
         <button type="submit">
-          <MdChevronLeft size={24} color="#fff" />
+          <MdChevronLeft size={24} color="#fff" onClick={previousSetPage} />
         </button>
-        Back | <strong> 1 </strong> | Next
+        Back | <strong> {postPage} </strong> | Next
         <button type="submit">
-          <MdChevronRight size={24} color="#fff" />
+          <MdChevronRight size={24} color="#fff" onClick={nextSetPage} />
         </button>
       </Footer>
     </Container>

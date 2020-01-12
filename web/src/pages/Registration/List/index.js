@@ -21,6 +21,7 @@ import {
 
 export default function Registration() {
   const [registrations, setRegistrations] = useState([]);
+  const [postPage, setPostPage] = useState(1);
 
   function dateFormatted(dt) {
     const dateFormat = format(parseISO(dt), "d 'de' MMMM, 'de' yyyy", {
@@ -29,21 +30,24 @@ export default function Registration() {
     return dateFormat;
   }
 
-  // function handlePrevPage() {
-  // }
+  function nextSetPage() {
+    setPostPage(postPage + 1);
+  }
 
-  // function handleNextPage() {
-  // }
+  function previousSetPage() {
+    // eslint-disable-next-line no-unused-expressions
+    postPage >= 2 ? setPostPage(postPage - 1) : postPage;
+  }
 
   useEffect(() => {
     async function loadRegistrations() {
       const response = await api.get('registrations', {
-        params: { page: 1 },
+        params: { page: postPage },
       });
       setRegistrations(response.data);
     }
     loadRegistrations();
-  }, [registrations]);
+  }, [postPage, registrations]);
 
   return (
     <Container>
@@ -90,11 +94,11 @@ export default function Registration() {
       </ListStudents>
       <Footer noEvent>
         <button type="submit">
-          <MdChevronLeft size={24} color="#fff" />
+          <MdChevronLeft size={24} color="#fff" onClick={previousSetPage} />
         </button>
-        Back | <strong> 1 </strong> | Next
+        Back | <strong> {postPage} </strong> | Next
         <button type="submit">
-          <MdChevronRight size={24} color="#fff" />
+          <MdChevronRight size={24} color="#fff" onClick={nextSetPage} />
         </button>
       </Footer>
     </Container>

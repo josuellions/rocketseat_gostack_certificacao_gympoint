@@ -19,16 +19,26 @@ import {
 
 export default function Plan() {
   const [loadPlan, setloadPlan] = useState([]);
+  const [postPage, setPostPage] = useState(1);
+
+  function nextSetPage() {
+    setPostPage(postPage + 1);
+  }
+
+  function previousSetPage() {
+    // eslint-disable-next-line no-unused-expressions
+    postPage >= 2 ? setPostPage(postPage - 1) : postPage;
+  }
 
   useEffect(() => {
     async function loadPlans() {
       const response = await api.get('plans', {
-        params: { page: 1 },
+        params: { page: postPage },
       });
       setloadPlan(response.data);
     }
     loadPlans();
-  }, []);
+  }, [postPage]);
 
   return (
     <Container>
@@ -65,11 +75,11 @@ export default function Plan() {
       </ListStudents>
       <Footer noEvent>
         <button type="submit">
-          <MdChevronLeft size={24} color="#fff" />
+          <MdChevronLeft size={24} color="#fff" onClick={previousSetPage} />
         </button>
-        Back | <strong> 1 </strong> | Next
+        Back | <strong> {postPage} </strong> | Next
         <button type="submit">
-          <MdChevronRight size={24} color="#fff" />
+          <MdChevronRight size={24} color="#fff" onClick={nextSetPage} />
         </button>
       </Footer>
     </Container>

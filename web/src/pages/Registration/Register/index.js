@@ -1,12 +1,11 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 
-import { format, addMonths } from 'date-fns';
-// import { utcToZonedTime } from 'date-fns-tz';
+import { format, addMonths, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import { Form, Input } from '@rocketseat/unform';
@@ -36,7 +35,8 @@ const schema = Yup.object().shape({
 export default function RegistrationRegister() {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.student.loading);
-  const [date] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+  const [dateend, setDateend] = useState('');
 
   const [totalPrice, settotalPrice] = useState();
 
@@ -45,6 +45,7 @@ export default function RegistrationRegister() {
 
   const [plans, setPlans] = useState([]);
   const [planID, setPlanID] = useState();
+  const [planduration, setPlanduration] = useState(0);
 
   const [registrations, setRegistrations] = useState([]);
 
@@ -52,12 +53,13 @@ export default function RegistrationRegister() {
     await dispatch(registrationUpRequest(studentID, planID, start_date));
   }
 
-  // const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  function dateFormatted(duration, setdate) {
+    const dtFormatted = format(addMonths(setdate, duration), "dd'/'MM'/'yyyy", {
+      locale: pt,
+    });
 
-  const dateFormatted = useMemo(
-    () => format(addMonths(date, 3), "dd'/'MM'/'yyyy", { locale: pt }),
-    [date]
-  );
+    setDateend(dtFormatted);
+  }
 
   useEffect(() => {
     async function loadRegistrations() {
@@ -70,20 +72,24 @@ export default function RegistrationRegister() {
       setRegistrations(rep);
     }
     loadRegistrations();
-  }, []);
+  }, [setRegistrations]);
 
   useEffect(() => {
     async function loadStudents() {
       const response = await api.get('students');
 
       const rep = response.data.map(data => {
+        // eslint-disable-next-line no-return-assign
+        registrations.map(registration =>
+          registration.students.id === data.id ? (data.id = null) : ''
+        );
         return data;
       });
 
       setStudent(rep);
     }
     loadStudents();
-  }, []);
+  }, [registrations]);
 
   useEffect(() => {
     async function loadPlans() {
@@ -96,26 +102,31 @@ export default function RegistrationRegister() {
     loadPlans();
   }, []);
 
-  function mapStateToProps(price, duration) {
+  function sunTotalPrice(price, duration) {
     settotalPrice(formatPrice(price * duration));
-  }
-
-  async function selectDate() {
-    // await console.tron.log(start_date);
   }
 
   function handleChangeStudent(event) {
     setStudentID(event.target.value);
+    setPlanID(planID);
   }
 
-  async function handleChangePlan(event) {
+  function handleChangePlan(event) {
     setPlanID(event.target.value);
 
-    await plans.map(plan =>
-      plan.id == event.target.value
-        ? mapStateToProps(plan.price, plan.duration)
+    plans.map(plan =>
+      parseInt(plan.id, 10) === parseInt(event.target.value, 10)
+        ? (sunTotalPrice(plan.price, plan.duration),
+          dateFormatted(plan.duration, date),
+          setPlanduration(plan.duration))
         : ''
     );
+  }
+
+  function handleChangeDate(event) {
+    const loadDate = parseISO(event.target.value);
+    dateFormatted(planduration, loadDate);
+    setDate(loadDate);
   }
 
   return (
@@ -134,15 +145,11 @@ export default function RegistrationRegister() {
         <FieldsetForm>
           <strong>ALUNO</strong>
           <ContainerSelect>
-            <select
-              name="student_id"
-              value={studentID}
-              onChange={handleChangeStudent}
-            >
-              <option> Select... </option>
+            <select name="student_id" onChange={handleChangeStudent}>
+              <option> SELECT... </option>
               {students.map(student =>
                 student.id > 0 ? (
-                  <option id={student.id} value={student.id}>
+                  <option key={student.id} id={student.id} value={student.id}>
                     {student.name}
                   </option>
                 ) : (
@@ -154,14 +161,10 @@ export default function RegistrationRegister() {
 
           <strong>PLANO</strong>
           <ContainerSelectPlan>
-            <select
-              name="plan_id"
-              value={studentID}
-              onChange={handleChangePlan}
-            >
-              <option> Select... </option>
+            <select name="plan_id" onChange={handleChangePlan}>
+              <option> SELECT... </option>
               {plans.map(plan => (
-                <option id={plan.id} value={plan.id}>
+                <option key={plan.id} id={plan.id} value={plan.id}>
                   {plan.title}
                 </option>
               ))}
@@ -173,8 +176,8 @@ export default function RegistrationRegister() {
               <Input
                 type="date"
                 name="start_date"
-                placeholder="dd/mm/yyyy"
-                onChange={() => selectDate()}
+                placeholder="dd/mm/aaaa"
+                onChange={handleChangeDate}
               />
             </FieldsetInput>
             <FieldsetInput>
@@ -182,8 +185,8 @@ export default function RegistrationRegister() {
               <Input
                 type="text"
                 name="end_date"
-                placeholder="dd/mm/yyyy"
-                value={dateFormatted}
+                placeholder="dd/mm/aaaa"
+                value={dateend || ''}
                 disabled="disabled"
               />
             </FieldsetInput>

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { Form, Input } from '@rocketseat/unform';
+
+import { formatPrice } from '~/util/format';
 
 import { planUpRequest } from '~/store/modules/plan/actions';
 import {
@@ -25,8 +27,26 @@ export default function PlanRegister() {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.student.loading);
 
+  const [totalPrice, settotalPrice] = useState([]);
+  const [totalMonth, setTotalMonth] = useState(0);
+  const [durationMonth, setDurationMonth] = useState(0);
+
   function handleSubmit({ title, duration, price }) {
     dispatch(planUpRequest(title, duration, price));
+  }
+
+  function sunTotalPrice(price, duration) {
+    settotalPrice(formatPrice(price * duration));
+    setTotalMonth(price);
+  }
+
+  function handleDuration(event) {
+    setDurationMonth(event.target.value);
+    sunTotalPrice(totalMonth, event.target.value);
+  }
+
+  function handleTotalMonth(event) {
+    sunTotalPrice(event.target.value, durationMonth);
   }
 
   return (
@@ -53,7 +73,12 @@ export default function PlanRegister() {
           <FieldsetInputs>
             <FieldsetInput>
               <strong htmlFor="duration">DURAÇÃO(em meses)</strong>
-              <Input type="text" name="duration" placeholder="0" />
+              <Input
+                type="text"
+                name="duration"
+                placeholder="0"
+                onChange={handleDuration}
+              />
             </FieldsetInput>
             <FieldsetInput>
               <strong htmlFor="price">PREÇO MENSAL</strong>
@@ -61,7 +86,7 @@ export default function PlanRegister() {
                 type="text"
                 name="price"
                 placeholder="R$ 0,00"
-                // value="72.0"
+                onChange={handleTotalMonth}
               />
             </FieldsetInput>
             <FieldsetInput>
@@ -70,7 +95,7 @@ export default function PlanRegister() {
                 type="text"
                 name="pricetotal"
                 placeholder="R$ 0,00"
-                value=""
+                value={totalPrice || ''}
                 disabled="disabled"
               />
             </FieldsetInput>

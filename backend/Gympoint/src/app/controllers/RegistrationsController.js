@@ -15,6 +15,27 @@ class RegistrationsController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
+    if (req.query.page === undefined) {
+      const registrationsAll = await Registrations.findAll({
+        attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
+        order: [['start_date', 'asc']],
+        include: [
+          {
+            model: Students,
+            as: 'students',
+            attributes: ['id', 'name', 'email', 'idade', 'peso', 'altura'],
+          },
+          {
+            model: Plans,
+            as: 'plans',
+            attributes: ['title', 'duration', 'price'],
+          },
+        ],
+      });
+
+      return res.json(registrationsAll);
+    }
+
     const registrations = await Registrations.findAll({
       limit: 10,
       offset: (page - 1) * 10,

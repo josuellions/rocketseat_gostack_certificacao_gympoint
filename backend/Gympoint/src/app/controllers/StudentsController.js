@@ -7,6 +7,14 @@ class StudentsController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
+    if (req.query.page === undefined) {
+      const studentsAll = await Students.findAll({
+        order: [['name', 'asc']],
+        attributes: ['id', 'name', 'email', 'idade', 'peso', 'altura'],
+      });
+
+      return res.json(studentsAll);
+    }
     const students = await Students.findAll({
       order: [['name', 'asc']],
       limit: 10,
