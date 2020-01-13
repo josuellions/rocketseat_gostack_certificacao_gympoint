@@ -14,7 +14,7 @@ class PlansController {
       order: [['price', 'desc']],
       limit: 10,
       offset: (page - 1) * 10,
-      attributes: ['id', 'title', 'duration', 'price', 'canceled_at'],
+      attributes: ['active', 'id', 'title', 'duration', 'price', 'canceled_at'],
     });
 
     return res.json(plans);
@@ -126,13 +126,11 @@ class PlansController {
     });
 
     if (CheckRegistrations) {
-      await checkPlans.update({
+      const responseup = await checkPlans.update({
         canceled_at: new Date(),
       });
 
-      return res
-        .status(200)
-        .json({ message: `delete plan: ${checkPlans.title}` });
+      return res.status(200).json({ responseup });
     }
 
     await Plans.destroy({ where: { id } });

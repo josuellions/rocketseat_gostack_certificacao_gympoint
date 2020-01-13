@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   MdAddCircleOutline,
   MdChevronLeft,
@@ -40,6 +41,27 @@ export default function Plan() {
     loadPlans();
   }, [postPage]);
 
+  async function handleCancel(id, title) {
+    try {
+      const response = await api.delete(`plans/${id}`);
+      setloadPlan(
+        loadPlan.map(plan =>
+          plan.id === id
+            ? {
+                ...plan,
+                active: response.data.active,
+              }
+            : plan
+        )
+      );
+
+      toast.success(`Success : O Plano: ${title}, foi removido!`);
+    } catch (err) {
+      console.tron.log(err);
+      toast.error('Erro: Falha ao excluir o plano!');
+    }
+  }
+
   return (
     <Container>
       <header>
@@ -60,17 +82,28 @@ export default function Plan() {
           </ListStudentHeader>
         </ul>
         <ul>
-          {loadPlan.map(item => (
-            <ListStudent key={item.id}>
-              <p>{item.title}</p>
-              <p>{item.duration} mês</p>
-              <span>
-                <strong>{formatPrice(item.price)}</strong>
-              </span>
-              <Link to="/plan/register">editar</Link>
-              <button type="button">excluir</button>
-            </ListStudent>
-          ))}
+          {loadPlan.map(item =>
+            item.active ? (
+              <ListStudent key={item.id}>
+                <p>{item.title}</p>
+                <p>{item.duration} mês</p>
+                <span>
+                  <strong>{formatPrice(item.price)}</strong>
+                </span>
+                <Link to="/plan/register">editar</Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleCancel(item.id, item.title);
+                  }}
+                >
+                  excluir
+                </button>
+              </ListStudent>
+            ) : (
+              ''
+            )
+          )}
         </ul>
       </ListStudents>
       <Footer noEvent>

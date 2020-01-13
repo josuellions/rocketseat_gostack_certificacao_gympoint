@@ -1,7 +1,10 @@
 import * as Yup from 'yup';
 import { Op } from 'sequelize';
+
 import User from '../models/User';
+
 import Students from '../models/Students';
+import Registrations from '../models/Registrations';
 
 class StudentsController {
   async index(req, res) {
@@ -65,9 +68,13 @@ class StudentsController {
 
   async show(req, res) {
     const { q } = req.query;
+    const { page = 1 } = req.query;
 
-    if (q === undefined) {
+    if (q === '' || q === undefined || q === null) {
       const students = await Students.findAll({
+        order: [['name', 'asc']],
+        limit: 10,
+        offset: (page - 1) * 10,
         attributes: ['id', 'name', 'email', 'idade', 'peso', 'altura'],
       });
 
@@ -77,9 +84,12 @@ class StudentsController {
     const searchStudents = await Students.findAll({
       where: {
         name: {
-          [Op.like]: `${q}`,
+          [Op.like]: `%${q}%`,
         },
       },
+      order: [['name', 'asc']],
+      limit: 10,
+      offset: (page - 1) * 10,
       attributes: ['id', 'name', 'email', 'idade', 'peso', 'altura'],
     });
 
@@ -143,7 +153,44 @@ class StudentsController {
   }
 
   async delete(req, res) {
-    return res.json({ mesage: 'Delete Aluno' });
+    /* Schemas Validation dados entrada */
+    const schema = Yup.object().shape({
+      id: Yup.number().required(),
+    });
+
+    if (!(await schema.isValid(req.params))) {
+      return res.status(400).json({ error: 'Validations fails.' });
+    }
+
+    const { id } = req.params;
+
+    const registration = await Registrations.findOne({
+      where: {
+        student_id: id,
+      },
+      attributes: [
+        'id',
+        'start_date',
+        'end_date',
+        'price',
+        'student_id',
+        'plan_id',
+      ],
+    });
+
+    if (registration) {
+      return res.status(400).json({ erro: 'Student is enrolled.' });
+    }
+
+    const student = await Students.findByPk(id);
+
+    await student.destroy({
+      where: {
+        id,
+      },
+    });
+
+    return res.status(200).json({ message: 'Excluded student' });
   }
 }
 

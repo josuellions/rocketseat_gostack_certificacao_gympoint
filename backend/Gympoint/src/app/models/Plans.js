@@ -8,6 +8,12 @@ class Plans extends Model {
         duration: Sequelize.DECIMAL,
         price: Sequelize.DECIMAL,
         canceled_at: Sequelize.DATE,
+        active: {
+          type: Sequelize.VIRTUAL(Sequelize.BOOLEAN, ['canceled_at']),
+          get() {
+            return this.get('canceled_at') === null;
+          },
+        },
       },
       {
         sequelize,

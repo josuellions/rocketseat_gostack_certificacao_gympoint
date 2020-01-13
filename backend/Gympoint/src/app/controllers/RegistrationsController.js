@@ -2,8 +2,8 @@ import * as Yup from 'yup';
 import { parseISO, isBefore, addMonths, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
-import Students from '../models/Students';
 import Plans from '../models/Plans';
+import Students from '../models/Students';
 import Registrations from '../models/Registrations';
 
 import Notification from '../schemas/Notification';
@@ -252,6 +252,7 @@ class RegistrationsController {
     const schema = Yup.object().shape({
       id: Yup.number().required(),
     });
+
     if (!(await schema.isValid(req.params))) {
       return res.status(400).json({ error: 'Validations fails.' });
     }
@@ -271,7 +272,8 @@ class RegistrationsController {
       canceled_at: new Date(),
     });
 
-    return res.json({ message: 'Delete Registrations' });
+    // return res.json({ message: 'Delete Registrations' });
+    return res.json(registration);
   }
 }
 

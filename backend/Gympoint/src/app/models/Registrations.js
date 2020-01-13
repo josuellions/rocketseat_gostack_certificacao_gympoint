@@ -11,11 +11,13 @@ class Registrations extends Model {
         canceled_at: Sequelize.DATE,
         active: {
           type: Sequelize.VIRTUAL(Sequelize.BOOLEAN, [
+            'canceled_at',
             'start_date',
             'end_date',
           ]),
           get() {
             return (
+              this.get('canceled_at') === null &&
               isBefore(this.get('start_date'), new Date()) &&
               isAfter(this.get('end_date'), new Date())
             );

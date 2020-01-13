@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   MdAddCircleOutline,
   MdChevronLeft,
@@ -49,6 +50,27 @@ export default function Registration() {
     loadRegistrations();
   }, [postPage, registrations]);
 
+  async function handleCancel(id) {
+    try {
+      const response = await api.delete(`registrations/${id}`);
+      setRegistrations(
+        registrations.map(registration =>
+          registration.id === id
+            ? {
+                ...registration,
+                active: response.data.active,
+              }
+            : registration
+        )
+      );
+
+      toast.success('Success : Matrícula foi cancelada!');
+    } catch (err) {
+      console.tron.log(err);
+      toast.error('Falha ao cancelar matrícula!');
+    }
+  }
+
   return (
     <Container>
       <header>
@@ -87,7 +109,13 @@ export default function Registration() {
                 </strong>
               </span>
               <Link to="/registration/register">editar</Link>
-              <button type="button">excluir</button>
+              <button
+                type="button"
+                onClick={() => handleCancel(item.id)}
+                disabled={!item.active}
+              >
+                excluir
+              </button>
             </ListStudent>
           ))}
         </ul>

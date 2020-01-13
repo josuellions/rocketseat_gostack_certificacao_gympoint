@@ -86,7 +86,15 @@ export const ListStudentHeader = styled.li`
   padding: 17px;
   justify-content: space-between;
 
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 150px;
+
   background: ${lighten(0.01, '#fff')};
+
+  strong:first-of-type {
+    width: 5px !important;
+  }
 
   span {
     width: 350px;
@@ -102,8 +110,13 @@ export const ListStudent = styled.li`
   padding: 17px;
   justify-content: space-between;
 
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 45px;
+
   align-items: center;
   background: ${lighten(0.01, '#fff')};
+
 
   strong {
     width: 40px;
@@ -112,8 +125,12 @@ export const ListStudent = styled.li`
     font-weight: normal;
   }
 
-    > p{
-    width-min: 280px;
+  p:first-of-type {
+    width: 5px !important;
+  }
+
+  > p{
+    width-min: 180px;
     width: 180px;
   }
 
