@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { Form, Input } from '@rocketseat/unform';
 
-import { studentUpRequest } from '~/store/modules/student/actions';
+import api from '~/services/api';
+
+import {
+  studentUpRequest,
+  studentUpdateRequest,
+} from '~/store/modules/student/actions';
 import {
   Container,
   FieldsetForm,
@@ -31,17 +36,38 @@ const schema = Yup.object().shape({
     .required('Altura e obrigatória'),
 });
 
-export default function SignUpStudent() {
-  const dispatch = useDispatch();
-  const loading = useSelector(state => state.student.loading);
+export default function SignUpStudent(params) {
+  const { id } = params.match.params;
 
-  function handleSubmit({ name, email, idade, peso, altura }) {
-    dispatch(studentUpRequest(name, email, idade, peso, altura));
+  const dispatch = useDispatch();
+  const [student, setStudent] = useState('');
+
+  async function handleSubmit({ name, email, idade, peso, altura }) {
+    // eslint-disable-next-line no-unused-expressions
+    parseInt(id, 10) > 0
+      ? await dispatch(
+          studentUpdateRequest(id, name, email, idade, peso, altura)
+        )
+      : await dispatch(studentUpRequest(name, email, idade, peso, altura));
   }
 
+  useEffect(() => {
+    async function loadStudent() {
+      const response = await api.get('students');
+
+      setStudent(
+        response.data.find(data =>
+          parseInt(data.id, 10) === parseInt(id, 10) ? data : ''
+        )
+      );
+    }
+    loadStudent();
+  }, [id]);
+
+  // console.tron.log(student);
   return (
     <Container>
-      <Form onSubmit={handleSubmit} schema={schema}>
+      <Form initialData={student} onSubmit={handleSubmit} schema={schema}>
         <header>
           <h1>Cadastro de alunos</h1>
           <Link to="/student/dashboard">
@@ -49,7 +75,7 @@ export default function SignUpStudent() {
           </Link>
           <button type="submit">
             <MdDone size={20} color="#fff" />
-            {loading ? 'Carregando...' : 'SALVAR'}
+            {id > 0 ? 'ATUALIZAR' : 'SALVAR'}
           </button>
         </header>
         <FieldsetForm>

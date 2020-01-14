@@ -3,6 +3,7 @@ import { Platform, TextInput } from 'react-native';
 import styled from 'styled-components/native';
 
 import Button from '~/components/Button';
+import Link from '~/components/Link';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
@@ -41,4 +42,8 @@ export const FormInput = styled(TextInput)`
 
 export const SubmitButton = styled(Button)`
   margin-top: 5px;
+`;
+
+export const LinkAnchor = styled(Link)`
+  margin: 0 0 0 0;
 `;

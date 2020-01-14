@@ -12,6 +12,7 @@ import {
   TTitle,
   TText,
   Time,
+  LinkAnchor,
 } from './styles';
 
 export default function Answers({ navigation }) {
@@ -24,9 +25,9 @@ export default function Answers({ navigation }) {
     });
   }, [created_at]);
 
-  // function handleSubmit() {
-  // dispath(signInRequest(id));
-  // }
+  function handlerBack() {
+    navigation.navigate('HelpOrders');
+  }
 
   return (
     <>
@@ -45,6 +46,7 @@ export default function Answers({ navigation }) {
             <TText>{answer}</TText>
           </Info>
         </Left>
+        <LinkAnchor onPress={() => handlerBack()}>Voltar</LinkAnchor>
       </Container>
     </>
   );

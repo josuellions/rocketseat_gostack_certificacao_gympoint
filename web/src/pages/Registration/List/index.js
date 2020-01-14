@@ -108,7 +108,7 @@ export default function Registration() {
                   )}
                 </strong>
               </span>
-              <Link to="/registration/register">editar</Link>
+              <Link to={`/registration/register/${item.id}`}>editar</Link>
               <button
                 type="button"
                 onClick={() => handleCancel(item.id)}

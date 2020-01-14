@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { Form, Input } from '@rocketseat/unform';
 
 import { formatPrice } from '~/util/format';
 
-import { planUpRequest } from '~/store/modules/plan/actions';
+import api from '~/services/api';
+
+import { planUpRequest, planUpdateRequest } from '~/store/modules/plan/actions';
 import {
   Container,
   FieldsetForm,
@@ -23,17 +25,35 @@ const schema = Yup.object().shape({
   price: Yup.string().required('Preço Mensal, é campo obrigatório'),
 });
 
-export default function PlanRegister() {
+export default function PlanRegister(params) {
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.student.loading);
 
+  const { id } = params.match.params;
+
+  const [plan, setPlan] = useState('');
   const [totalPrice, settotalPrice] = useState([]);
   const [totalMonth, setTotalMonth] = useState(0);
   const [durationMonth, setDurationMonth] = useState(0);
 
   function handleSubmit({ title, duration, price }) {
-    dispatch(planUpRequest(title, duration, price));
+    // eslint-disable-next-line no-unused-expressions
+    parseInt(id, 10) > 0
+      ? dispatch(planUpdateRequest(id, title, duration, price))
+      : dispatch(planUpRequest(title, duration, price));
   }
+
+  useEffect(() => {
+    async function loadPlan() {
+      const response = await api.get('plans');
+
+      setPlan(
+        response.data.find(data =>
+          parseInt(data.id, 10) === parseInt(id, 10) ? data : ''
+        )
+      );
+    }
+    loadPlan();
+  }, [id]);
 
   function sunTotalPrice(price, duration) {
     settotalPrice(formatPrice(price * duration));
@@ -51,7 +71,7 @@ export default function PlanRegister() {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit} schema={schema}>
+      <Form initialData={plan} onSubmit={handleSubmit} schema={schema}>
         <header>
           <h1>Cadastro de plano</h1>
           <Link to="/plan/list">
@@ -59,7 +79,7 @@ export default function PlanRegister() {
           </Link>
           <button type="submit">
             <MdDone size={20} color="#fff" />
-            {loading ? 'Carregando...' : 'SALVAR'}
+            {id > 0 ? 'AUTUALIZAR' : 'SALVAR'}
           </button>
         </header>
         <FieldsetForm>

@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import HeaderCustom from '~/components/Header';
-import { Container, Form, FormInput, SubmitButton } from './styles';
+import { Container, Form, FormInput, SubmitButton, LinkAnchor } from './styles';
 
 import { helpnewUpRequest } from '~/store/modules/helpnew/actions';
 
-export default function HelpNew() {
+export default function HelpNew({ navigation }) {
   const dispath = useDispatch();
   const studentId = useSelector(state => state.auth.id);
   const loading = useSelector(state => state.auth.loading);
@@ -17,6 +17,10 @@ export default function HelpNew() {
   function handleSubmit() {
     dispath(helpnewUpRequest(studentId, question));
     setQuestion('');
+  }
+
+  function handlerBack() {
+    navigation.navigate('HelpOrders');
   }
 
   return (
@@ -40,6 +44,7 @@ export default function HelpNew() {
             Enviar pedido
           </SubmitButton>
         </Form>
+        <LinkAnchor onPress={() => handlerBack()}>Voltar</LinkAnchor>
       </Container>
     </>
   );

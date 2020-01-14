@@ -90,7 +90,7 @@ export default function Plan() {
                 <span>
                   <strong>{formatPrice(item.price)}</strong>
                 </span>
-                <Link to="/plan/register">editar</Link>
+                <Link to={`/plan/register/${item.id}`}>editar</Link>
                 <button
                   type="button"
                   onClick={() => {

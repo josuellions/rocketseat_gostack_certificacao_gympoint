@@ -25,4 +25,27 @@ export function* plan({ payload }) {
   }
 }
 
-export default all([takeLatest('@auth/PLAN_UP_REQUEST', plan)]);
+export function* planUpdate({ payload }) {
+  try {
+    const { id, title, duration, price } = payload;
+
+    const response = yield call(api.put, 'plans', {
+      id,
+      title,
+      duration,
+      price,
+    });
+    yield put(planUpSuccess(response.data));
+
+    history.push('/plan/list');
+  } catch (err) {
+    console.tron.log(err);
+    toast.error('Falha ao atualizar o cadastro, verifique os dados!');
+    yield put(planInFailure());
+  }
+}
+
+export default all([
+  takeLatest('@auth/PLAN_UP_REQUEST', plan),
+  takeLatest('@auth/PLAN_UPDATE_REQUEST', planUpdate),
+]);

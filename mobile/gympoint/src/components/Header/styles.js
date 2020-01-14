@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import Link from '~/components/Link';
 
 export const Container = styled.View`
   flex: 1;
@@ -9,4 +10,9 @@ export const Container = styled.View`
   height: 52px;
   max-height: 52px;
   margin-top: 0;
+`;
+
+export const LinkAnchor = styled(Link)`
+  margin: 0px 0 0px 0px;
+  padding-left: 180px;
 `;

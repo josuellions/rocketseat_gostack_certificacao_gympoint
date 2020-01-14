@@ -10,7 +10,7 @@ export function* student({ payload }) {
   try {
     const { name, email, idade, peso, altura } = payload;
 
-    const response = yield call(api.post, 'students', {
+    yield call(api.post, 'students', {
       name,
       email,
       idade,
@@ -18,9 +18,7 @@ export function* student({ payload }) {
       altura,
     });
 
-    // const {  email, peso, altura } = response.data;
-
-    yield put(studentUpSuccess(response.data));
+    yield put(studentUpSuccess());
 
     history.push('/student/list');
   } catch (err) {
@@ -30,4 +28,30 @@ export function* student({ payload }) {
   }
 }
 
-export default all([takeLatest('@auth/STUDENT_UP_REQUEST', student)]);
+export function* studentUpdate({ payload }) {
+  try {
+    const { id, name, email, idade, peso, altura } = payload;
+
+    yield call(api.put, 'students', {
+      id,
+      name,
+      email,
+      idade,
+      peso,
+      altura,
+    });
+
+    yield put(studentUpSuccess());
+
+    history.push('/student/list');
+  } catch (err) {
+    console.tron.log(err);
+    toast.error('Falha ao atualizar cadastro, verifique seus dados!');
+    yield put(signInFailure());
+  }
+}
+
+export default all([
+  takeLatest('@auth/STUDENT_UP_REQUEST', student),
+  takeLatest('@auth/STUDENT_UPDATE_REQUEST', studentUpdate),
+]);

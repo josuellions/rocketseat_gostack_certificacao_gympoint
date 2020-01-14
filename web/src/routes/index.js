@@ -24,6 +24,12 @@ export default function Routes() {
       <Route path="/register" exact component={SingUp} isPrivate />
       <Route path="/plan/list" exact component={PlanList} isPrivate />
       <Route path="/plan/register" exact component={PlanRegister} isPrivate />
+      <Route
+        path="/plan/register/:id"
+        exact
+        component={PlanRegister}
+        isPrivate
+      />
       <Route path="/student/register" exact component={StudentUp} isPrivate />
       <Route
         path="/student/register/:id"
@@ -40,6 +46,12 @@ export default function Routes() {
       />
       <Route
         path="/registration/register"
+        exact
+        component={RegistrationRegister}
+        isPrivate
+      />
+      <Route
+        path="/registration/register/:id"
         exact
         component={RegistrationRegister}
         isPrivate

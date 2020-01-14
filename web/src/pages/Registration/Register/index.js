@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 
@@ -13,7 +13,10 @@ import { formatPrice } from '~/util/format';
 
 import api from '~/services/api';
 
-import { registrationUpRequest } from '~/store/modules/registration/actions';
+import {
+  registrationUpRequest,
+  registrationUpdateRequest,
+} from '~/store/modules/registration/actions';
 import {
   Container,
   FieldsetForm,
@@ -32,15 +35,17 @@ const schema = Yup.object().shape({
 });
 */
 
-export default function RegistrationRegister() {
+export default function RegistrationRegister(params) {
+  const { id } = params.match.params;
+
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.student.loading);
   const [date, setDate] = useState(new Date());
   const [dateend, setDateend] = useState('');
 
   const [totalPrice, settotalPrice] = useState();
 
-  const [students, setStudent] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [studentsInit, setStudentsInit] = useState([]);
   const [studentID, setStudentID] = useState();
 
   const [plans, setPlans] = useState([]);
@@ -48,9 +53,15 @@ export default function RegistrationRegister() {
   const [planduration, setPlanduration] = useState(0);
 
   const [registrations, setRegistrations] = useState([]);
+  const [registrationsInit, setRegistrationsInit] = useState([]);
 
   async function handleSubmit({ start_date }) {
-    await dispatch(registrationUpRequest(studentID, planID, start_date));
+    // eslint-disable-next-line no-unused-expressions
+    parseInt(id, 10) > 0
+      ? await dispatch(
+          registrationUpdateRequest(id, studentID, planID, start_date)
+        )
+      : await dispatch(registrationUpRequest(studentID, planID, start_date));
   }
 
   function dateFormatted(duration, setdate) {
@@ -60,6 +71,22 @@ export default function RegistrationRegister() {
 
     setDateend(dtFormatted);
   }
+
+  useEffect(() => {
+    async function loadRegistration() {
+      const response = await api.get('registrations');
+
+      const responseSearch = response.data.find(data =>
+        parseInt(data.id, 10) === parseInt(id, 10) ? data : ''
+      );
+
+      setRegistrationsInit(responseSearch);
+      setStudentsInit(responseSearch.students);
+      setStudentID(responseSearch.students.id);
+      console.tron.log(responseSearch.id);
+    }
+    loadRegistration();
+  }, [id]);
 
   useEffect(() => {
     async function loadRegistrations() {
@@ -86,7 +113,7 @@ export default function RegistrationRegister() {
         return data;
       });
 
-      setStudent(rep);
+      setStudents(rep);
     }
     loadStudents();
   }, [registrations]);
@@ -131,7 +158,7 @@ export default function RegistrationRegister() {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form initialData={registrationsInit} onSubmit={handleSubmit}>
         <header>
           <h1>Cadastro de matrícula</h1>
           <Link to="/registration/list">
@@ -139,21 +166,36 @@ export default function RegistrationRegister() {
           </Link>
           <button type="submit">
             <MdDone size={20} color="#fff" />
-            {loading ? 'Carregando...' : 'SALVAR'}
+            {id > 0 ? 'ATUALIZAR' : 'SALVAR'}
           </button>
         </header>
         <FieldsetForm>
           <strong>ALUNO</strong>
           <ContainerSelect>
             <select name="student_id" onChange={handleChangeStudent}>
-              <option> SELECT... </option>
-              {students.map(student =>
-                student.id > 0 ? (
-                  <option key={student.id} id={student.id} value={student.id}>
-                    {student.name}
-                  </option>
-                ) : (
-                  ''
+              {id > 0 ? (
+                <option
+                  key={studentsInit.id}
+                  id={studentsInit.id}
+                  value={studentsInit.id}
+                >
+                  {studentsInit.name}
+                </option>
+              ) : (
+                (<option> SELECT... </option>)(
+                  students.map(student =>
+                    student.id > 0 ? (
+                      <option
+                        key={student.id}
+                        id={student.id}
+                        value={student.id}
+                      >
+                        {student.name}
+                      </option>
+                    ) : (
+                      ''
+                    )
+                  )
                 )
               )}
             </select>

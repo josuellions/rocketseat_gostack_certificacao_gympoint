@@ -49,7 +49,7 @@ export const Container = styled.div`
       color: rgba(255, 255, 255, 0.7);
       transition: : background 0.2s;
 
-      width: 120px;
+      width: 130px;
       display: flex;
       justify-content: space-between;
       align-self: flex-end;

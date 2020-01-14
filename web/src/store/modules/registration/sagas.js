@@ -26,4 +26,28 @@ export function* registration({ payload }) {
   }
 }
 
-export default all([takeLatest('@auth/REGISTRATION_UP_REQUEST', registration)]);
+export function* registrationUpdate({ payload }) {
+  try {
+    const { id, student_id, plan_id, start_date } = payload;
+
+    const response = yield call(api.put, 'registrations', {
+      id,
+      start_date,
+      student_id,
+      plan_id,
+    });
+
+    yield put(registrationUpSuccess(response.data));
+
+    history.push('/registration/list');
+  } catch (err) {
+    console.tron.log(err);
+    toast.error('Falha na atualização do cadastro, verifique os dados!');
+    yield put(registrationInFailure());
+  }
+}
+
+export default all([
+  takeLatest('@auth/REGISTRATION_UP_REQUEST', registration),
+  takeLatest('@auth/REGISTRATION_UPDATE_REQUEST', registrationUpdate),
+]);
