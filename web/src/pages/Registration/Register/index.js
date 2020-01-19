@@ -46,22 +46,20 @@ export default function RegistrationRegister(params) {
 
   const [students, setStudents] = useState([]);
   const [studentsInit, setStudentsInit] = useState([]);
-  const [studentID, setStudentID] = useState();
+  const [studentID, setStudentID] = useState(0);
 
   const [plans, setPlans] = useState([]);
-  const [planID, setPlanID] = useState();
+  const [planID, setPlanID] = useState(0);
   const [planduration, setPlanduration] = useState(0);
 
   const [registrations, setRegistrations] = useState([]);
   const [registrationsInit, setRegistrationsInit] = useState([]);
 
-  async function handleSubmit({ start_date }) {
+  function handleSubmit({ start_date }) {
     // eslint-disable-next-line no-unused-expressions
     parseInt(id, 10) > 0
-      ? await dispatch(
-          registrationUpdateRequest(id, studentID, planID, start_date)
-        )
-      : await dispatch(registrationUpRequest(studentID, planID, start_date));
+      ? dispatch(registrationUpdateRequest(id, studentID, planID, start_date))
+      : dispatch(registrationUpRequest(studentID, planID, start_date));
   }
 
   function dateFormatted(duration, setdate) {
@@ -76,14 +74,17 @@ export default function RegistrationRegister(params) {
     async function loadRegistration() {
       const response = await api.get('registrations');
 
-      const responseSearch = response.data.find(data =>
+      const responseSearch = await response.data.find(data =>
         parseInt(data.id, 10) === parseInt(id, 10) ? data : ''
       );
 
+      if (responseSearch) {
+        setStudentsInit(responseSearch.students);
+        setStudentID(responseSearch.students.id);
+      }
+
       setRegistrationsInit(responseSearch);
-      setStudentsInit(responseSearch.students);
-      setStudentID(responseSearch.students.id);
-      console.tron.log(responseSearch.id);
+      // console.tron.log(responseSearch.id);
     }
     loadRegistration();
   }, [id]);
@@ -92,7 +93,7 @@ export default function RegistrationRegister(params) {
     async function loadRegistrations() {
       const response = await api.get('registrations');
 
-      const rep = response.data.map(data => {
+      const rep = await response.data.map(data => {
         return data;
       });
 
@@ -105,7 +106,7 @@ export default function RegistrationRegister(params) {
     async function loadStudents() {
       const response = await api.get('students');
 
-      const rep = response.data.map(data => {
+      const rep = await response.data.map(data => {
         // eslint-disable-next-line no-return-assign
         registrations.map(registration =>
           registration.students.id === data.id ? (data.id = null) : ''
@@ -121,7 +122,7 @@ export default function RegistrationRegister(params) {
   useEffect(() => {
     async function loadPlans() {
       const response = await api.get('plans');
-      const rep = response.data.map(data => {
+      const rep = await response.data.map(data => {
         return data;
       });
       setPlans(rep);
@@ -173,7 +174,8 @@ export default function RegistrationRegister(params) {
           <strong>ALUNO</strong>
           <ContainerSelect>
             <select name="student_id" onChange={handleChangeStudent}>
-              {id > 0 ? (
+              <option>SELECT...</option>
+              {id !== null && id > 0 ? (
                 <option
                   key={studentsInit.id}
                   id={studentsInit.id}
@@ -182,19 +184,13 @@ export default function RegistrationRegister(params) {
                   {studentsInit.name}
                 </option>
               ) : (
-                (<option> SELECT... </option>)(
-                  students.map(student =>
-                    student.id > 0 ? (
-                      <option
-                        key={student.id}
-                        id={student.id}
-                        value={student.id}
-                      >
-                        {student.name}
-                      </option>
-                    ) : (
-                      ''
-                    )
+                students.map(student =>
+                  student.id > 0 ? (
+                    <option key={student.id} id={student.id} value={student.id}>
+                      {student.name}
+                    </option>
+                  ) : (
+                    ''
                   )
                 )
               )}
@@ -237,6 +233,7 @@ export default function RegistrationRegister(params) {
               {plans.map(plan =>
                 plan.id === 1 ? (
                   <Input
+                    key={plan.id}
                     type="text"
                     name="end_price"
                     placeholder="R$ 0,00"

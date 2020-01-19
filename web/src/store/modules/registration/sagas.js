@@ -16,7 +16,8 @@ export function* registration({ payload }) {
       start_date,
     });
 
-    yield put(registrationUpSuccess(response.data));
+    console.tron.log(response);
+    yield put(registrationUpSuccess());
 
     history.push('/registration/list');
   } catch (err) {
@@ -30,14 +31,14 @@ export function* registrationUpdate({ payload }) {
   try {
     const { id, student_id, plan_id, start_date } = payload;
 
-    const response = yield call(api.put, 'registrations', {
+    yield call(api.put, 'registrations', {
       id,
       start_date,
       student_id,
       plan_id,
     });
 
-    yield put(registrationUpSuccess(response.data));
+    yield put(registrationUpSuccess());
 
     history.push('/registration/list');
   } catch (err) {

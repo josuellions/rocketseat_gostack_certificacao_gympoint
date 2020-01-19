@@ -34,7 +34,6 @@ export default function HelpNew({ navigation }) {
             numberOfLines={10}
             multiline
             autoCorrect
-            autoCapitalize
             placeholder="Inclua seu pedído de auxílio"
             value={question}
             onChangeText={setQuestion}

@@ -22,10 +22,11 @@ export default function Checkins() {
     async function loadCheckins() {
       const response = await api.get(`students/${studentId}/checkins`);
 
-      setCheckins(response.data.map(checkin => checkin));
+      setCheckins(response.data);
       setcheckinID(false);
     }
-    loadCheckins(studentId);
+
+    loadCheckins();
   }, [checkinsID, studentId]);
 
   function handleSubmit() {

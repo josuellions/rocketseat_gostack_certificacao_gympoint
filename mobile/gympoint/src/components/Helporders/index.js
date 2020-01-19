@@ -26,7 +26,7 @@ export default function Helporders({ data, onAnswers }) {
   return (
     <Container>
       <Left>
-        <Info>
+        <Info key={id}>
           {answer_at != null ? (
             <THead>
               <LinkAnchor
@@ -41,7 +41,7 @@ export default function Helporders({ data, onAnswers }) {
             </THead>
           ) : (
             <THead>
-              <LinkAnchor icon="check-circle" color="#eee">
+              <LinkAnchor key={id} icon="check-circle" color="#eee">
                 <TTitle>sem resposta</TTitle>
               </LinkAnchor>
               <Time>{dateParsed}</Time>

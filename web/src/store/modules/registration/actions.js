@@ -12,10 +12,10 @@ export function registrationUpdateRequest(id, student_id, plan_id, start_date) {
   };
 }
 
-export function registrationUpSuccess(student_id, plan_id, start_date) {
+export function registrationUpSuccess(id, student_id, plan_id, start_date) {
   return {
     type: '@auth/REGISTRATION_UP_SUCCESS',
-    payload: { student_id, plan_id, start_date },
+    payload: { id, student_id, plan_id, start_date },
   };
 }
 
