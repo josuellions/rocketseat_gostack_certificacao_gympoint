@@ -338,7 +338,7 @@ Quando um pedido de auxílio for respondido, o aluno receber um e-mail da plataf
 
 ### Projeto Mobile
 
-### Desenvolvimento somente em Android / Sistema Operacional Linux-Ubuntu 16.04LTS
+#### Desenvolvimento somente em Android / Sistema Operacional Linux-Ubuntu 16.04LTS
 
 ##### FERRAMENTAS
 
@@ -346,7 +346,7 @@ Quando um pedido de auxílio for respondido, o aluno receber um e-mail da plataf
 
 ##### Validaçao Yup
 
-##### Iniciar o projeto Mobile
+#### Iniciar o projeto Mobile
 
 ###### Agora execute por linha comando no terminal no diretorio projeto em "../mobile/gympoint" :
 
