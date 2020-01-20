@@ -22,27 +22,27 @@
 
 ##### Banco dados - Postgres / Mongo / Redis
 
-#### Jobs, Gerenciamento e Fila envio EMAILs
+##### Jobs, Gerenciamento e Fila envio EMAILs
 
-#### Queue
+###### Queue
 
-#### Tratativa de Erros/Exceções
+##### Tratativa de Erros/Exceções
 
-##### Sentry
+###### Sentry
 
 ##### Youch
 
 ### Pré-requisitos
 
-#### Visual Code ou IDE de sua escolha -> Instalado e configurado
+##### Visual Code ou IDE de sua escolha -> Instalado e configurado
 
-#### Instalar e configurar o NVM
+##### Instalar e configurar o NVM
 
-#### Instalar e configurar o NODE LTS
+##### Instalar e configurar o NODE LTS
 
-#### Instalar e configurar o YARN
+##### Instalar e configurar o YARN
 
-#### Docker -> para gerenciar banco dados, ou instalar e configurar banco dados local
+##### Docker -> para gerenciar banco dados, ou instalar e configurar banco dados local
 
 ##### Banco Dados -> Instalar no Docker ou Local
 
@@ -87,16 +87,16 @@
 
 ##### Iniciarlizar os bancos de dados no Docker ou local
 
-###### Agora execute por linha comando no terminal no diretorio projeto em "../backend/Gympoint" :
+#### Agora execute por linha comando no terminal no diretorio projeto em "../backend/Gympoint" :
 
-###### Instalando as dependências do projeto backend
+##### Instalando as dependências do projeto backend
 
 ```js
 yarn install
 yarn
 ```
 
-###### Criando a estrutura dados no banco dados
+##### Criando a estrutura dados no banco dados
 
 ```js
 OBS: Com banco dados novo sem tables, no diretorio backend do projeto
@@ -104,14 +104,14 @@ yarn sequelize db:migrate
 yarn sequelize db:seed:all
 ```
 
-Obs.:
-yarn sequelize db:migrate -> Cria estrutura de dados da aplicação
-yarn sequelize db:seed:all -> Cria usuário administrador para acessar aplicação
-usename: 'Administrador',
-email: 'admin@gympoint.com',
-password_hash: '123456'
+- Obs.:
+- yarn sequelize db:migrate -> Cria estrutura de dados da aplicação
+- yarn sequelize db:seed:all -> Cria usuário administrador para acessar aplicação
+- usename: 'Administrador',
+- email: 'admin@gympoint.com',
+- password_hash: '123456'
 
-###### Inicializando aplicação no Backend
+##### Inicializando aplicação no Backend
 
 ```js
 Obs.: em um terminal - para conexão backend
@@ -123,7 +123,7 @@ Obs.: em outro terminal - para gerenciamento de filas de envio E-mails
 yarn queue
 ```
 
-Obs.: Deixar executando para acesso do frontend WEB e Mobile
+- Obs.: Deixar executando para acesso do frontend WEB e Mobile
 
 ### Projeto WEB
 
@@ -152,8 +152,8 @@ yarn
 yarn start
 ```
 
-Obs.: O projeto backend deve está executando para acesso do frontend WEB
-Obs.: acessar com usuário Adiministrador que foi criado no projeto Backend
+- Obs.: O projeto backend deve está executando para acesso do frontend WEB
+- Obs.: acessar com usuário Adiministrador que foi criado no projeto Backend
 
 ### Esturtura projeto
 
@@ -180,11 +180,11 @@ Obs.: acessar com usuário Adiministrador que foi criado no projeto Backend
 - EditorConfig - OK;
 - Sequelize (Utilize PostgreSQL acesso backend); - Gympoint - OK
 
-### Funcionalidades
+#### Funcionalidades
 
-- Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação.
+- Abaixo estão descritas as funcionalidades adicionadas na aplicação.
 
-#### 1. Autenticação
+##### 1. Autenticação
 
 - Permita que um usuário se autentique em sua aplicação utilizando e-mail e uma senha.
 
@@ -192,7 +192,7 @@ Obs.: acessar com usuário Adiministrador que foi criado no projeto Backend
 - The MD5 hash for Gympointrockeseat
 - Realize a validação dos dados de entrada; - schemas validadtion com YUP - OK
 
-#### 2. Cadastro de alunos
+##### 2. Cadastro de alunos
 
 - Permita que alunos sejam mantidos (cadastrados/atualizados) na aplicação utilizando nome, email, idade, peso e altura.
 
@@ -202,11 +202,11 @@ Obs.: acessar com usuário Adiministrador que foi criado no projeto Backend
 
 - O aluno não pode se autenticar no sistema, ou seja, não possui senha.
 
-### Funcionalidades do administrador
+#### Funcionalidades do administrador
 
 Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação para administradores.
 
-#### 1. Gestão de planos
+##### 1. Gestão de planos
 
 Permita que o usuário possa cadastrar planos para matrícula de alunos, o plano deve possuir os seguintes campos:
 
@@ -228,7 +228,7 @@ Planos pre-cadastrado como exemplo:
 
 Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
 
-#### 2. Gestão de matrículas
+##### 2. Gestão de matrículas
 
 Apesar do aluno estar cadastrado na plataforma, isso não significa que o mesmo tem uma matrícula ativa e que pode acessar a academia.
 
@@ -259,11 +259,11 @@ Criado rotas para listagem/cadastro/atualização/remocação de matrículas;
 
 Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
 
-### Funcionalidades do aluno
+##### Funcionalidades do aluno
 
-Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação para alunos.
+Abaixo estão descritas as funcionalidades da aplicação para alunos.
 
-#### 1. Checkins
+##### 1. Checkins
 
 Quando o aluno chega na academia o mesmo realiza um check-in apenas informando seu ID de cadastro (ID do banco de dados);
 
@@ -283,7 +283,7 @@ Crie uma rota para listagem de todos checkins realizados por um usuário com bas
 
 Exemplo de requisição: `GET https://gympoint.com/students/3/checkins`
 
-#### 2. Pedidos de auxílio
+##### 2. Pedidos de auxílio
 
 O aluno pode criar pedidos de auxílio para a academia em relação a algum exercício, alimentação ou instrução qualquer;
 
@@ -296,33 +296,31 @@ A tabela `help_orders` deve conter os seguintes campos:
 - created_at;
 - updated_at;
 
-Crie uma rota para a academia listar todos pedidos de auxílio sem resposta;
+Rota para a academia listar todos pedidos de auxílio sem resposta;
 
-Crie uma rota para o aluno cadastrar pedidos de auxílio apenas informando seu ID de cadastro (ID do banco de dados);
+Rota para o aluno cadastrar pedidos de auxílio apenas informando seu ID de cadastro (ID do banco de dados);
 
-Exemplo de requisição: `POST https://gympoint.com/students/3/help-orders`
+- exemplo de requisição: `POST https://gympoint.com/students/3/help-orders`
 
-Crie uma rota para listar todos pedidos de auxílio de um usuário com base em seu ID de cadastro;
+Rota para listar todos pedidos de auxílio de um usuário com base em seu ID de cadastro;
 
-Exemplo de requisição: `GET https://gympoint.com/students/3/help-orders`
+- exemplo de requisição: `GET https://gympoint.com/students/3/help-orders`
 
-Crie uma rota para a academia responder um pedido de auxílio:
+Rota para a academia responder um pedido de auxílio:
 
-Exemplo de requisição: `POST https://gympoint.com/help-orders/1/answer`
+- exemplo de requisição: `POST https://gympoint.com/help-orders/1/answer`
 
-Quando um pedido de auxílio for respondido, o aluno deve receber um e-mail da plataforma com a pergunta e resposta da academia;
+Quando um pedido de auxílio for respondido, o aluno receber um e-mail da plataforma com a pergunta e resposta da academia;
 
-|-> - Envio de EMAIL -> nodemailer (Mailtrap - DEV)
+- Envio de EMAIL -> nodemailer (Mailtrap - DEV)
 
-- Usando FILAS para envio de EMAILs -
-- no banco dados REDIS no docker para armazer strutura fila de envio emails, nome banco dados: redisgympoint
+- Usando FILAS para envio de EMAILs banco dados REDIS, no docker para armazer estrutura fila de envio emails, nome banco dados: redisgympoint
 
 - Personalização email html: handlebarsjs - templating on steroids
 
-- TRATAMENTO DE ERROS - MONITORAMENTO APLICAÇÃO
-- Sentry
+- TRATAMENTO DE ERROS - MONITORAMENTO APLICAÇÃO -> Sentry
 
-A versão web do projeto Gympoint representa a visão da academia, ou seja, todas funcionalidades presentes na versão web são para administradores. As funcionalidades para o aluno serão dispostas no aplicativo mobile.
+- A versão web do projeto Gympoint representa a visão da academia, ou seja, todas funcionalidades presentes na versão web são para administradores. As funcionalidades para o aluno serão dispostas no aplicativo mobile.
 
 ### Informações importantes
 
