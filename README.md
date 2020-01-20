@@ -131,7 +131,7 @@ yarn queue
 
 ##### customize-cra
 
-##### Validaçao
+##### Validaçao Yup
 
 ##### Iniciarlizar o projeto WEB
 
@@ -194,7 +194,7 @@ yarn start
 
 - Permita que alunos sejam mantidos (cadastrados/atualizados) na aplicação utilizando nome, email, idade, peso e altura.
 
-- Utilize uma nova tabela no banco de dados chamada `students`.
+- Criado uma tabela no banco de dados chamada `students` para armazenar o cadastro de alunos.
 
 - O cadastro de alunos só pode ser feito por administradores autenticados na aplicação.
 
@@ -202,7 +202,7 @@ yarn start
 
 #### Funcionalidades do administrador
 
-Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação para administradores.
+Abaixo estão descritas as funcionalidades que você adicionadas na aplicação para administradores.
 
 ##### 1. Gestão de planos
 
@@ -216,7 +216,7 @@ Permita que o usuário possa cadastrar planos para matrícula de alunos, o plano
 - created_at;
 - updated_at;
 
-Planos pre-cadastrado como exemplo:
+Planos pre-cadastrado como exemplo, já adicionado ao executar comandos para criar e gerar as tabelas do banco dados:
 
 - `Start`: Plano de 1 mês por R\$129;
 - `Gold`: Plano de 3 meses por R\$109/mês;
@@ -263,7 +263,9 @@ Abaixo estão descritas as funcionalidades da aplicação para alunos.
 
 ##### 1. Checkins
 
-Quando o aluno chega na academia o mesmo realiza um check-in apenas informando seu ID de cadastro (ID do banco de dados);
+Quando o aluno chega na academia o mesmo realiza um check-in apenas informando seu ID de cadastro (ID do banco de dados),
+
+- Obs.: que pode ser obtido na listagem de alunos;
 
 Esse check-in serve para monitorar quantas vezes o usuário frequentou a academia na semana.
 
@@ -277,7 +279,7 @@ O usuário só pode fazer **5 checkins** dentro de um período de 7 dias corrido
 
 Exemplo de requisição: `POST https://gympoint.com/students/3/checkins`
 
-Crie uma rota para listagem de todos checkins realizados por um usuário com base em seu ID de cadastro;
+Criado uma rota para listagem de todos checkins realizados por um usuário com base em seu ID de cadastro;
 
 Exemplo de requisição: `GET https://gympoint.com/students/3/checkins`
 
@@ -285,7 +287,7 @@ Exemplo de requisição: `GET https://gympoint.com/students/3/checkins`
 
 O aluno pode criar pedidos de auxílio para a academia em relação a algum exercício, alimentação ou instrução qualquer;
 
-A tabela `help_orders` deve conter os seguintes campos:
+A tabela `help_orders` contém os seguintes campos:
 
 - student_id (referência ao aluno);
 - question (pergunta do aluno em texto);
@@ -332,7 +334,7 @@ Quando um pedido de auxílio for respondido, o aluno receber um e-mail da plataf
 ### Opcionais
 
 1. Adicionado paginação no front-end e back-end para todas listagens;
-2. Utilizado máscaras para inputs;
+2. Utilizando máscaras para inputs;
 
 ### Projeto Mobile
 
@@ -342,7 +344,7 @@ Quando um pedido de auxílio for respondido, o aluno receber um e-mail da plataf
 
 ##### Reactotron
 
-##### Validaçao
+##### Validaçao Yup
 
 ##### Iniciarlizar o projeto Mobile
 
@@ -413,5 +415,5 @@ A versão mobile do projeto Gympoint representa a visão do aluno, ou seja, toda
 ### Opcionais
 
 1. Adicionado scroll infinito com paginação na listagem de check-ins e pedidos de auxílio;
-2. Botão voltar nas telas Answers(View detalhamento resposta) e HelpNew(Nova solicitação aajuda)
+2. Botão voltar nas telas Answers(View detalhamento resposta) e HelpNew(Nova solicitação ajuda)
 3. Botão Sair para finalizar o login
