@@ -2,7 +2,7 @@
 
 ### Projeto Certificação RocketSeat
 
-#### 2019/12/09 a 2020/01/05
+#### 09/12/2019 à 05/01/2020
 
 #### Nome Aplicação: Gympoint
 
@@ -64,7 +64,7 @@
 - Personalização email html: handlebarsjs - templating on steroids
 
 - Criado Filas para envio de EMAILs, melhor performace no envio
-- Criado banco dados REDIS no docker para armazer strutura fila no envio emails, nome banco dados: redisgympoint
+- Criado banco dados REDIS no docker para armazer estrutura fila no envio emails, nome banco dados: redisgympoint
 - Utilizando beequeue, para controle e gerenciamento de filas
 
 - **adicionado funcionalidades do back-end** da aplicação:
