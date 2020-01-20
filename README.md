@@ -58,7 +58,7 @@
 
 ### Projeto Backend
 
-###### Desenvolvimento dos requisitos
+##### Desenvolvimento dos requisitos
 
 - Envio de EMAIL -> nodemailer (Mailtrap - DEV)
 - Personalização email html: handlebarsjs - templating on steroids
@@ -94,7 +94,7 @@ yarn install
 yarn
 ```
 
-##### Criando a estrutura dados no banco dados
+##### Criando a estrutura no banco dados
 
 ```js
 OBS: Com banco dados novo sem tables, no diretorio backend do projeto
@@ -125,7 +125,7 @@ yarn queue
 
 ### Projeto WEB
 
-#### FERRAMENTAS
+##### FERRAMENTAS
 
 ##### Reactotron
 
@@ -133,7 +133,7 @@ yarn queue
 
 ##### Validaçao Yup
 
-##### Iniciarlizar o projeto WEB
+#### Iniciar o projeto WEB
 
 ###### Agora execute por linha comando no terminal no diretorio projeto em "../web" :
 
@@ -340,13 +340,13 @@ Quando um pedido de auxílio for respondido, o aluno receber um e-mail da plataf
 
 ### Desenvolvimento somente em Android / Sistema Operacional Linux-Ubuntu 16.04LTS
 
-#### FERRAMENTAS
+##### FERRAMENTAS
 
 ##### Reactotron
 
 ##### Validaçao Yup
 
-##### Iniciarlizar o projeto Mobile
+##### Iniciar o projeto Mobile
 
 ###### Agora execute por linha comando no terminal no diretorio projeto em "../mobile/gympoint" :
 
