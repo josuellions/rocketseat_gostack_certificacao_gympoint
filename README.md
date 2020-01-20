@@ -1,4 +1,4 @@
-# RocketSeat Gostack Certificacao - Gympoint
+# RocketSeat Gostack Certificação - Gympoint
 
 ### Projeto Certificação RocketSeat
 
@@ -63,17 +63,15 @@
 - Envio de EMAIL -> nodemailer (Mailtrap - DEV)
 - Personalização email html: handlebarsjs - templating on steroids
 
-- CRIANDO FILAS para envio de EMAILs, melhor performace no envio
-- criar banco dados REDIS no docker para armazer strutura fila de envio emails
-- nome banco dados: redisgympoint
-- beequeue => controle e gerenciamento de filas
-- Executar em outro termina: yarn queue (para rodar a serviço execução de filas de envio email)
+- Criado Filas para envio de EMAILs, melhor performace no envio
+- Criado banco dados REDIS no docker para armazer strutura fila no envio emails, nome banco dados: redisgympoint
+- Utilizando beequeue, para controle e gerenciamento de filas
 
 - **adicionado funcionalidades do back-end** da aplicação:
 
 1. Adicionado um campo boolean `true/false` na listagem de matrículas indicando se a matrícula está ativa ou não, ou seja, se a data de término é posterior à atual e a data de início inferior (utilize um campo `VIRTUAL`).
 
-2. Permite que a listagem de alunos (`/students/users`) seja filtrada por nome recebendo um Query Parameter `?q=Diego` e buscando no banco usuários com esse filtro (utilizado o operador `like`). Caso o parâmetro não seja passado, retorna todos usuários;
+2. Listagem de alunos (`/students/users`) com filtro por nome recebendo um Query Parameter `?q=Diego`, buscando no banco usuários com esse filtro (utilizado o operador `like`). Caso o parâmetro não seja passado, retorna todos usuários;
 
 #### Configurações base
 
@@ -415,5 +413,5 @@ A versão mobile do projeto Gympoint representa a visão do aluno, ou seja, toda
 ### Opcionais
 
 1. Adicionado scroll infinito com paginação na listagem de check-ins e pedidos de auxílio;
-2. Botão Sair para finalizar o login
-3. Botão voltar na telas
+2. Botão voltar nas telas Answers(View detalhamento resposta) e HelpNew(Nova solicitação aajuda)
+3. Botão Sair para finalizar o login
