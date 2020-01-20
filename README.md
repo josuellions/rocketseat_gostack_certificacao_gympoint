@@ -32,25 +32,100 @@
 
 ##### Youch
 
-### Configurações base
+### Pré-requisitos
 
-#### Configurar arquivo ".env.example" com variàveis ambiente, renomear para ".env"
+#### Visual Code ou IDE de sua escolha -> Instalado e configurado
 
-#### Executar console
+#### Instalar e configurar o NVM
 
-#### Diretorio aplicação backend, para excecutar backend:
+#### Instalar e configurar o NODE LTS
+
+#### Instalar e configurar o YARN
+
+#### Docker -> para gerenciar banco dados, ou instalar e configurar banco dados local
+
+##### Banco Dados -> Instalar no Docker ou Local
+
+###### Banco Dados Postgres -> Para tabelas e dados da aplicação
+
+###### Banco Dados MongoDB -> Para Notificações e mensagens
+
+###### Banco Dados Redis -> Para gerenciamento de fila no envio de email
+
+#### Realizar donwload ou clone do projeto completo, contendo "backend, web e mobile"
+
+##### Caso download extrair conteúdo para um diretorio
+
+### Projeto Backend
+
+###### Desenvolvimento dos requisitos
+
+- Envio de EMAIL -> nodemailer (Mailtrap - DEV)
+- Personalização email html: handlebarsjs - templating on steroids
+
+- CRIANDO FILAS para envio de EMAILs, melhor performace no envio
+- criar banco dados REDIS no docker para armazer strutura fila de envio emails
+- nome banco dados: redisgympoint
+- beequeue => controle e gerenciamento de filas
+- Executar em outro termina: yarn queue (para rodar a serviço execução de filas de envio email)
+
+- **adicionado funcionalidades do back-end** da aplicação:
+
+1. Adicionado um campo boolean `true/false` na listagem de matrículas indicando se a matrícula está ativa ou não, ou seja, se a data de término é posterior à atual e a data de início inferior (utilize um campo `VIRTUAL`).
+
+2. Permite que a listagem de alunos (`/students/users`) seja filtrada por nome recebendo um Query Parameter `?q=Diego` e buscando no banco usuários com esse filtro (utilizado o operador `like`). Caso o parâmetro não seja passado, retorna todos usuários;
+
+#### Configurações base
+
+##### Acessar o diretorio backend/Gympoint do projeto, abrir no Visual Code ou IDE de sua escolha.
+
+##### Configurar arquivo ".env.example" com variàveis ambiente, renomear ou salvar como ".env"
+
+##### Criar banco dados no postgres, para armazenar os dados da aplicação
+
+##### Instalar Postbird, para auxiliar na criação do banco dados do postgres
+
+##### Iniciarlizar os bancos de dados no Docker ou local
+
+###### Agora execute por linha comando no terminal no diretorio projeto em "../backend/Gympoint" :
+
+###### Instalando as dependências do projeto backend
 
 ```js
-> yarn dev
+yarn install
+yarn
 ```
 
-#### Diretorio aplicação backend, para excecutar Jobs email:
+###### Criando a estrutura dados no banco dados
 
 ```js
- yarn queue
+OBS: Com banco dados novo sem tables, no diretorio backend do projeto
+yarn sequelize db:migrate
+yarn sequelize db:seed:all
 ```
 
-## WEB
+Obs.:
+yarn sequelize db:migrate -> Cria estrutura de dados da aplicação
+yarn sequelize db:seed:all -> Cria usuário administrador para acessar aplicação
+usename: 'Administrador',
+email: 'admin@gympoint.com',
+password_hash: '123456'
+
+###### Inicializando aplicação no Backend
+
+```js
+Obs.: em um terminal - para conexão backend
+yarn dev
+```
+
+```js
+Obs.: em outro terminal - para gerenciamento de filas de envio E-mails
+yarn queue
+```
+
+Obs.: Deixar executando para acesso do frontend WEB e Mobile
+
+### Projeto WEB
 
 #### FERRAMENTAS
 
@@ -58,25 +133,33 @@
 
 ##### customize-cra
 
-##### Validaçao YUP
+##### Validaçao
+
+##### Iniciarlizar o projeto WEB
+
+###### Agora execute por linha comando no terminal no diretorio projeto em "../web" :
+
+###### Instalando as dependências do projeto web
+
+```js
+yarn install
+yarn
+```
+
+###### Inicializando projeto web - start (rodar projeto)
+
+```js
+yarn start
+```
+
+Obs.: O projeto backend deve está executando para acesso do frontend WEB
+Obs.: acessar com usuário Adiministrador que foi criado no projeto Backend
 
 ### Esturtura projeto
 
-# INICIO
-
-## PRIMEIRA FASE - 01
-
-## :rocket: Sobre o desafio
-
-A aplicação que iremos dar início ao desenvolvimento a partir de agora é um app gerenciador de academia, o **Gympoint**.
-
-Nesse primeiro desafio vamos criar algumas funcionalidades básicas que aprendemos ao longo das aulas até aqui. Esse projeto será desenvolvido aos poucos até o fim da sua jornada onde você terá uma aplicação completa envolvendo back-end, front-end e mobile, que será utilizada para a **certificação do bootcamp**, então, bora pro código!
-
-### Um pouco sobre as ferramentas
-
-Você deverá criar a aplicação do zero utilizando o [Express](https://expressjs.com/), além de precisar configurar as seguintes ferramentas:
-
 - Sucrase + Nodemon; - OK
+
+#### ESLint Configurado
 
 - ESLint -Airbnb -ok
 
@@ -95,47 +178,29 @@ Você deverá criar a aplicação do zero utilizando o [Express](https://express
 
 - Prettier - OK
 - EditorConfig - OK;
-- Sequelize (Utilize PostgreSQL ou MySQL); - Gympoint - ok
+- Sequelize (Utilize PostgreSQL acesso backend); - Gympoint - OK
 
 ### Funcionalidades
 
-Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação.
+- Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação.
 
 #### 1. Autenticação
 
-Permita que um usuário se autentique em sua aplicação utilizando e-mail e uma senha.
+- Permita que um usuário se autentique em sua aplicação utilizando e-mail e uma senha.
 
-Crie um usuário administrador utilizando a funcionalidade de [seeds do sequelize](https://sequelize.org/master/manual/migrations.html#creating-first-seed), essa funcionalidade serve para criarmos registros na base de dados de forma automatizada.
-
-### Agora execute:
-
-```js
-OBS: Com banco dados novo sem tables
-yarn sequelize db:migrate
-yarn sequelize db:seed:all
-```
-
-Agora você tem um usuário na sua base de dados, utilize esse usuário para todos logins daqui pra frente.
-
-- A autenticação deve ser feita utilizando JWT. -> jsonwebtoken -OK
+- A autenticação realizada através JWT. -> jsonwebtoken -OK
 - The MD5 hash for Gympointrockeseat
 - Realize a validação dos dados de entrada; - schemas validadtion com YUP - OK
 
 #### 2. Cadastro de alunos
 
-Permita que alunos sejam mantidos (cadastrados/atualizados) na aplicação utilizando nome, email, idade, peso e altura.
+- Permita que alunos sejam mantidos (cadastrados/atualizados) na aplicação utilizando nome, email, idade, peso e altura.
 
-Utilize uma nova tabela no banco de dados chamada `students`.
+- Utilize uma nova tabela no banco de dados chamada `students`.
 
-O cadastro de alunos só pode ser feito por administradores autenticados na aplicação.
+- O cadastro de alunos só pode ser feito por administradores autenticados na aplicação.
 
-O aluno não pode se autenticar no sistema, ou seja, não possui senha.
-
-## SEGUNDA FASE - 02
-
-## :rocket: Sobre o desafio
-
-Durante esse desafio vamos aprimorar a aplicação Gympoint que demos início no desafio anterior implementando funcionalidades que aprendemos durante as aulas até agora.
+- O aluno não pode se autenticar no sistema, ou seja, não possui senha.
 
 ### Funcionalidades do administrador
 
@@ -153,17 +218,13 @@ Permita que o usuário possa cadastrar planos para matrícula de alunos, o plano
 - created_at;
 - updated_at;
 
-Crie alguns planos como por exemplo:
+Planos pre-cadastrado como exemplo:
 
 - `Start`: Plano de 1 mês por R\$129;
 - `Gold`: Plano de 3 meses por R\$109/mês;
 - `Diamond`: Plano de 6 meses por R\$89/mês;
 
-- OBS: Banco Dados Zerado, sem tabelas e dados
-- Exec => yarn sequelize db:migrate
-- Exec => yarn sequelize db:send:all
-
-Crie rotas para listagem/cadastro/atualização/remoção de planos;
+- Rotas para listagem/cadastro/atualização/remoção de planos;
 
 Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
 
@@ -171,7 +232,7 @@ Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
 
 Apesar do aluno estar cadastrado na plataforma, isso não significa que o mesmo tem uma matrícula ativa e que pode acessar a academia.
 
-Nessa funcionalidade criaremos um cadastro de matrículas por aluno, a matrícula possui os campos:
+Nessa funcionalidade foi criado um cadastro de matrículas por aluno, a matrícula possui os campos:
 
 - student_id (referência ao aluno);
 - plan_id (referência ao plano);
@@ -192,20 +253,9 @@ Preço calculado: `R$327`
 
 Quando um aluno **realiza uma matrícula** ele recebe um e-mail com detalhes da sua inscrição na academia como plano, data de término, valor e uma mensagem de boas-vidas.
 
-## Desenvolvimento dos requisitos
+#### Desenvolvimento dos requisitos
 
--UTILIZADO mogodb, criar imagem docker, para armazenar Notificações, estrutura e controle de envio de email, realizar configurações no variaveis de ambiente do arquivo ".env"
-
-- Envio de EMAIL -> nodemailer (Mailtrap - DEV)
-- Personalização email html: handlebarsjs - templating on steroids
-
-- CRIANDO FILAS para envio de EMAILs, melhor performace no envio
-- criar banco dados REDIS no docker para armazer strutura fila de envio emails
-- nome banco dados: redisgympoint
-- beequeue => controle e gerenciamento de filas
-- Executar em outro termina: yarn queue (para rodar a serviço execução de filas de envio email)
-
-Crie rotas para listagem/cadastro/atualização/remocação de matrículas;
+Criado rotas para listagem/cadastro/atualização/remocação de matrículas;
 
 Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
 
@@ -272,48 +322,78 @@ Quando um pedido de auxílio for respondido, o aluno deve receber um e-mail da p
 - TRATAMENTO DE ERROS - MONITORAMENTO APLICAÇÃO
 - Sentry
 
-## TERCEIRA FASE - 03
-
-## 🚀 Sobre o desafio
-
-Durante esse desafio vamos construir o front-end da aplicação Gympoint que criamos o back-end durante os desafios dos módulos 02 e 03 de Node.js.
-
 A versão web do projeto Gympoint representa a visão da academia, ou seja, todas funcionalidades presentes na versão web são para administradores. As funcionalidades para o aluno serão dispostas no aplicativo mobile.
-
-### Novas funcionalidades
-
-Antes de iniciar a parte web, **adicione as seguintes funcionalidades no back-end** da aplicação:
-
-1. Adicione um campo boolean `true/false` na listagem de matrículas indicando se a matrícula está ativa ou não, ou seja, se a data de término é posterior à atual e a data de início inferior (utilize um campo `VIRTUAL`).
-
-2. Permita que a listagem de alunos (`/users`) seja filtrada por nome recebendo um Query Parameter `?q=Diego` e buscando no banco usuários com esse filtro (utilize o operador `like`). Caso o parâmetro não seja passado, retorne todos usuários;
 
 ### Informações importantes
 
-1. Antes de deletar qualquer registro do banco crie uma verificação adicinal usando a função `confirm` do JavaScript;
-2. Para formatação de datas utilize sempre a biblioteca `date-fns`;
-3. Não realize formatações de valores dentro do `return ()` nos componentes React, opte por formatar os dados assim que recebidos da API;
-4. No cadastro/edição de planos e matrículas os inputs com fundo cinza são calculados automaticamente com base na seleção dos outros valores;
-5. No cadastro/edição de matrícula deve ser possível buscar o aluno pelo nome, utilize o método `async` da biblioteca [React Select](https://react-select.com/home#async). Os planos devem ser buscados da API assim que a página carregar e não devem possuir filtro.
+1. Alerta quando deletar qualquer registro do banco;
+2. Para formatação de datas utilizado biblioteca `date-fns`;
+3. Formatações de valores, formatando os dados assim que recebidos da API;
+4. Cadastro/edição de planos e matrículas os inputs com fundo cinza são calculados automaticamente com base na seleção dos outros valores;
+5. No cadastro/edição de matrícula é possível buscar o aluno pelo nome.
+6. Os planos são buscados da API assim que a página carregar e não possui filtro.
 
 ### Opcionais
 
-1. Adicione paginação no front-end e back-end para todas listagens;
-2. Utilize máscaras para inputs numéricos de valores, peso e altura;
+1. Adicionado paginação no front-end e back-end para todas listagens;
+2. Utilizado máscaras para inputs;
 
-## QUARTA FASE - 04
-
-## Mobile
+### Projeto Mobile
 
 ### Desenvolvimento somente em Android / Sistema Operacional Linux-Ubuntu 16.04LTS
 
-### Ajuste SDK - Android
+#### FERRAMENTAS
 
-### Dentro do diretorio do projeto
+##### Reactotron
 
-#### Alterar o caminho do SDK no arquivo em ~/android/local.properties
+##### Validaçao
 
-### Configurando ESLint
+##### Iniciarlizar o projeto Mobile
+
+###### Agora execute por linha comando no terminal no diretorio projeto em "../mobile/gympoint" :
+
+###### Instalando as dependências do projeto mobile
+
+```js
+yarn install
+yarn
+```
+
+###### Criar no projeto do dispositivo mobile
+
+- Um arquivo dentro do diretório projeto "../mobile/gympoint/android/local.properties"
+
+```js
+Obs.: Com contéudo apontando para o SDK do android - exemplo abaixo
+sdk.dir = /home/seu_usuario/Android/Sdk
+```
+
+###### Instalar ADB para acesso ao dispositivo mobile
+
+```js
+sudo apt-get install adb
+adb reverse tcp:8081 tcp:8081
+adb devices
+Obs.: adb devices -> para verificar se dispositivo mobile foi detectado
+```
+
+###### Instalando e Carregando projeto no dispositivo mobile
+
+```js
+react-native run-android
+ou
+yarn android
+```
+
+###### Executando projeto no dispositivo mobile
+
+```js
+yarn start
+```
+
+Obs.: O projeto backend deve está executando para acesso do frontend Mobile
+
+#### ESLint Configurado
 
 ```js
 > yarn eslint --init
@@ -332,14 +412,10 @@ Antes de iniciar a parte web, **adicione as seguintes funcionalidades no back-en
 * The config that you've selected requires the following dependencies:
 ```
 
-## Configurando Reactotron
-
-## 🚀 Sobre o desafio
-
-Durante esse desafio vamos construir o app mobile da aplicação Gympoint que criamos o back-end durante os desafios dos módulos 02 e 03 de Node.js e front-end no desafio do módulo 09 de ReactJS.
-
 A versão mobile do projeto Gympoint representa a visão do aluno, ou seja, todas funcionalidades presentes nesse projeto são para alunos.
 
 ### Opcionais
 
-1. Adicione scroll infinito com paginação na listagem de check-ins e pedidos de auxílio;
+1. Adicionado scroll infinito com paginação na listagem de check-ins e pedidos de auxílio;
+2. Botão Sair para finalizar o login
+3. Botão voltar na telas
